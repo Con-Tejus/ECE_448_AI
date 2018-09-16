@@ -32,10 +32,28 @@ def bfs(maze):
     # TODO: Write your code here
     # return path, num_states_explored
     # will most likely be done in a loop sequence 
-    start = maze.getStart() # is characterized as a tuple(row,column)
+    curr_pos = maze.getStart() # is characterized as a tuple(row,column)
+    visited = curr_pos
+    #need to use the dimensions some how
     dimensions = maze.getDimensions() # returns num of row,columns
     obj_list = maze.getObjectives()
-    
+    #possibly use a queue to check which nodes we have visited
+    while(curr_obj != obj_list):
+
+        # if maze.isObjective(curr_pos):
+        #     curr_obj += curr_pos
+
+        neighbors = maze.getNeighbors(curr_pos)
+        #need to record our original starting point if we need to come back to a point
+        #since it is bfs need to visit one entire layer first then move onto the next layer
+        for i in neighbors:
+            if i not in visited:
+                visited += i
+                if maze.isObjective(i):
+                    curr_obj += i
+                curr_pos = i # this needs to be done up top
+
+
     return [], 0
 
 
