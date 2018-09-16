@@ -31,12 +31,18 @@ def search(maze, searchMethod):
 def bfs(maze):
     # TODO: Write your code here
     # return path, num_states_explored
+    # will most likely be done in a loop sequence 
+    start = maze.getStart() # is characterized as a tuple(row,column)
+    dimensions = maze.getDimensions() # returns num of row,columns
+    obj_list = maze.getObjectives()
+    
     return [], 0
 
 
 def dfs(maze):
     # TODO: Write your code here
     # return path, num_states_explored
+    # will most likely be a recursive function
     return [], 0
 
 
