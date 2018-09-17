@@ -35,13 +35,13 @@ def bfs(maze):
     # return path, num_states_explored
     cur_pos = maze.getStart() # is characterized as a tuple(row,column)
     dimensions = maze.getDimensions() # returns num of row,columns
-    visited = [False]*(dimension[0]*dimensions[1])
-    states_visited = 0;
+    visited[dimensions[0]][dimensions[1]] = [False]
+    num_states_explored = 0;
 
     q = Queue()
     q.append(cur_pos)
-    visited[cur_pos] = True
-    states_visited++
+    visited[cur_pos[0]][cur_pos[1]] = True
+    num_states_explored++
     #possibly use a queue to check which nodes we have visited
     #use
     while(!q.empty()):
@@ -49,16 +49,14 @@ def bfs(maze):
         cur_pos = q.pop()
         neighbors = maze.getNeighbors(cur_pos)
 
-        #need to record our original starting point if we need to come back to a point
         #since it is bfs need to visit one entire layer first then move onto the next layer
         for i in neighbors:
-            if visited[i] == False:
-                if maze.isValidMove(i):
-                    q.append(i)
-                    visited[i] = True
-                    states_visited++
-                    if(maze.isObjective(i)):
-                        return(visited,states_visited)
+            if visited[i[0]][i[1]] == False:
+                q.append(i)
+                visited[i[0]][i[1]] = True
+                num_states_explored++
+                if(maze.isObjective(i)):
+                    return(visited,num_states_explored)
         
     
 
