@@ -19,6 +19,8 @@ files and classes when code is run, so be careful to not modify anything else.
 # maze is a Maze object based on the maze from the file specified by input filename
 # searchMethod is the search method specified by --method flag (bfs,dfs,greedy,astar)
 
+from queue import *
+
 def search(maze, searchMethod):    
     return {
         "bfs": bfs,
@@ -31,27 +33,34 @@ def search(maze, searchMethod):
 def bfs(maze):
     # TODO: Write your code here
     # return path, num_states_explored
-    # will most likely be done in a loop sequence 
-    curr_pos = maze.getStart() # is characterized as a tuple(row,column)
-    visited = curr_pos
-    #need to use the dimensions some how
+    cur_pos = maze.getStart() # is characterized as a tuple(row,column)
     dimensions = maze.getDimensions() # returns num of row,columns
-    obj_list = maze.getObjectives()
+    visited = [False]*(dimension[0]*dimensions[1])
+    states_visited = 0;
+
+    q = Queue()
+    q.append(cur_pos)
+    visited[cur_pos] = True
+    states_visited++
     #possibly use a queue to check which nodes we have visited
-    while(curr_obj != obj_list):
+    #use
+    while(!q.empty()):
+        
+        cur_pos = q.pop()
+        neighbors = maze.getNeighbors(cur_pos)
 
-        # if maze.isObjective(curr_pos):
-        #     curr_obj += curr_pos
-
-        neighbors = maze.getNeighbors(curr_pos)
         #need to record our original starting point if we need to come back to a point
         #since it is bfs need to visit one entire layer first then move onto the next layer
         for i in neighbors:
-            if i not in visited:
-                visited += i
-                if maze.isObjective(i):
-                    curr_obj += i
-                curr_pos = i # this needs to be done up top
+            if visited[i] == False:
+                if maze.isValidMove(i):
+                    q.append(i)
+                    visited[i] = True
+                    states_visited++
+                    if(maze.isObjective(i)):
+                        return(visited,states_visited)
+        
+    
 
 
     return [], 0
@@ -60,7 +69,6 @@ def bfs(maze):
 def dfs(maze):
     # TODO: Write your code here
     # return path, num_states_explored
-    # will most likely be a recursive function
     return [], 0
 
 
