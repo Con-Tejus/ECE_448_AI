@@ -35,30 +35,33 @@ def bfs(maze):
     # return path, num_states_explored
     cur_pos = maze.getStart() # is characterized as a tuple(row,column)
     dimensions = maze.getDimensions() # returns num of row,columns
-    visited[dimensions[0]][dimensions[1]] = [False]
+    visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
+    #Matrix = [[0 for x in range(w)] for y in range(h)]
     num_states_explored = 0;
 
     q = Queue()
     q.put(cur_pos)
     visited[cur_pos[0]][cur_pos[1]] = True
-    num_states_explored++
+    num_states_explored += 1
     #possibly use a queue to check which nodes we have visited
     #use
-    if(maze.isObjective(cur_pos)):
+    if(maze.isObjective(cur_pos[0],cur_pos[1])):
         return(visited,num_states_explored)
 
-    while(!q.empty()):
+    while not q.empty():
         
         cur_pos = q.get()
-        neighbors = maze.getNeighbors(cur_pos)
+        neighbors = maze.getNeighbors(cur_pos[0],cur_pos[1])
 
         #since it is bfs need to visit one entire layer first then move onto the next layer
         for i in neighbors:
+            #print(i[0])
+            #print(i[1])
             if visited[i[0]][i[1]] == False:
                 q.put(i)
                 visited[i[0]][i[1]] = True
-                num_states_explored++
-                if(maze.isObjective(i)):
+                num_states_explored += 1
+                if(maze.isObjective(i[0],i[1])):
                     return(visited,num_states_explored)
         
     
@@ -70,6 +73,25 @@ def bfs(maze):
 def dfs(maze):
     # TODO: Write your code here
     # return path, num_states_explored
+    cur_pos = maze.getStart()
+    dimensions = maze.getDimensions()
+    visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
+    num_states_explored = 0;
+
+    stack = [cur_pos]
+    while stack:
+        cur_pos = stack.pop()
+        neighbors = maze.getNeighbors(cur_pos[0],cur_pos[1])
+
+        if visited[cur_pos[0]][cur_pos[1]] == False:
+            visited[cur_pos[0]][cur_pos[1]] = True
+            num_states_explored += 1  
+            if(maze.isObjective(cur_pos[0],cur_pos[1])):
+                print(cur_pos[0])
+                print(cur_pos[1])
+                return(visited,num_states_explored)
+            for i in neighbors:
+                stack.append(i)
     return [], 0
 
 
@@ -81,29 +103,29 @@ def greedy(maze):
 
     cur_pos = maze.getStart() # is characterized as a tuple(row,column)
     dimensions = maze.getDimensions() # returns num of row,columns
-    visited[dimensions[0]][dimensions[1]] = [False]
+    visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
     num_states_explored = 0;
-    priority_que = queue.PriorityQueue()
+    priority_que = PriorityQueue()
     distance = heuristic(maze,cur_pos)
     priority_que.put([distance,cur_pos])
-    visited[cur_pos[0]][cur_pos[1]] = True
 
-    if(maze.isObjective(location)):
+    if(maze.isObjective(cur_pos[0],cur_pos[1])):
         return(visited,num_states_explored)
 
-    while(!priority_que.empty()):
+    while not priority_que.empty():
         cur_pos = priority_que.get()
         location = cur_pos[1]
-        visited[location[0]][location[1]] = True
-        num_states_explored++
-        neighbors = maze.getNeighbors(location)
+        num_states_explored += 1
+        neighbors = maze.getNeighbors(location[0],location[1])
 
-        if(maze.isObjective(location)):
+        if(maze.isObjective(location[0],location[1])):
             return(visited,num_states_explored)
 
-        for i in neighbors:
-            distance = heuristic(maze,i)
-            priority_que.put([distance,i])
+        if(visited[location[0]][location[1]] == False):
+            visited[location[0]][location[1]] = True
+            for i in neighbors:
+                distance = heuristic(maze,i)
+                priority_que.put([distance,i])
 
     return [], 0
 
@@ -116,6 +138,6 @@ def astar(maze):
     return [], 0
 
 def heuristic(maze, cur_pos):
-    objectives = maze.getObjectives()
-    goal = objectives[-1]
-    return abs(goal[0] - cur_pos[0]) + abs(goal[1] - cur_pos[1])
+    objectives = maze.getObjectives()
+    goal = objectives[-1]
+    return abs(goal[0] - cur_pos[0]) + abs(goal[1] - cur_pos[1])
