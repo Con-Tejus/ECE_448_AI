@@ -19,7 +19,13 @@ files and classes when code is run, so be careful to not modify anything else.
 # maze is a Maze object based on the maze from the file specified by input filename
 # searchMethod is the search method specified by --method flag (bfs,dfs,greedy,astar)
 
-from queue import *
+#from queue import *
+import sys
+is_py2 = sys.version[0] == '2'
+if is_py2:
+    import Queue as queue
+else:
+    import queue as queue
 
 def search(maze, searchMethod):    
     return {
@@ -36,17 +42,18 @@ def bfs(maze):
     cur_pos = maze.getStart() # is characterized as a tuple(row,column)
     dimensions = maze.getDimensions() # returns num of row,columns
     visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
+    path = []
     #Matrix = [[0 for x in range(w)] for y in range(h)]
-    num_states_explored = 0;
-
-    q = Queue()
+    num_states_explored = 0
+    q = queue.Queue()
     q.put(cur_pos)
     visited[cur_pos[0]][cur_pos[1]] = True
+    path.append( (cur_pos[0], cur_pos[1]) )
     num_states_explored += 1
     #possibly use a queue to check which nodes we have visited
     #use
     if(maze.isObjective(cur_pos[0],cur_pos[1])):
-        return(visited,num_states_explored)
+        return(path,num_states_explored)
 
     while not q.empty():
         
@@ -60,9 +67,10 @@ def bfs(maze):
             if visited[i[0]][i[1]] == False:
                 q.put(i)
                 visited[i[0]][i[1]] = True
+                path.append( (i[0], i[1]) )
                 num_states_explored += 1
-                if(maze.isObjective(i[0],i[1])):
-                    return(visited,num_states_explored)
+                if maze.isObjective( i[0],i[1] ) :
+                    return path,num_states_explored
         
     
 
@@ -76,7 +84,8 @@ def dfs(maze):
     cur_pos = maze.getStart()
     dimensions = maze.getDimensions()
     visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
-    num_states_explored = 0;
+    path = []
+    num_states_explored = 0
 
     stack = [cur_pos]
     while stack:
@@ -85,11 +94,10 @@ def dfs(maze):
 
         if visited[cur_pos[0]][cur_pos[1]] == False:
             visited[cur_pos[0]][cur_pos[1]] = True
+            path.append( (cur_pos[0], cur_pos[1]) )
             num_states_explored += 1  
             if(maze.isObjective(cur_pos[0],cur_pos[1])):
-                print(cur_pos[0])
-                print(cur_pos[1])
-                return(visited,num_states_explored)
+                return(path,num_states_explored)
             for i in neighbors:
                 stack.append(i)
     return [], 0
@@ -104,13 +112,14 @@ def greedy(maze):
     cur_pos = maze.getStart() # is characterized as a tuple(row,column)
     dimensions = maze.getDimensions() # returns num of row,columns
     visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
-    num_states_explored = 0;
-    priority_que = PriorityQueue()
+    path = []
+    num_states_explored = 0
+    priority_que = queue.PriorityQueue()
     distance = heuristic(maze,cur_pos)
     priority_que.put([distance,cur_pos])
 
     if(maze.isObjective(cur_pos[0],cur_pos[1])):
-        return(visited,num_states_explored)
+        return(path,num_states_explored)
 
     while not priority_que.empty():
         cur_pos = priority_que.get()
@@ -119,10 +128,12 @@ def greedy(maze):
         neighbors = maze.getNeighbors(location[0],location[1])
 
         if(maze.isObjective(location[0],location[1])):
-            return(visited,num_states_explored)
+            path.append( (location[0], location[1]) )
+            return(path,num_states_explored)
 
         if(visited[location[0]][location[1]] == False):
             visited[location[0]][location[1]] = True
+            path.append( (location[0], location[1]) )
             for i in neighbors:
                 distance = heuristic(maze,i)
                 priority_que.put([distance,i])
