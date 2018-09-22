@@ -149,9 +149,16 @@ def astar(maze):
     dimensions = maze.getDimensions() # returns num of row,columns
     visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
     num_states_explored = 0;
-    frontier = PriorityQueue()
+    frontier = queue.PriorityQueue()
+    path = []
     distance = heuristic(maze,cur_pos)
-    priority_que.put([distance,cur_pos])
+    frontier.put([distance,cur_pos])
+    came_from = {}
+    came_from[cur_pos] = None
+    cost_so_far = {}
+    cost_so_far[cur_pos] = 0
+
+    
 
     while not frontier.empty():
 
@@ -162,13 +169,19 @@ def astar(maze):
         neighbors = maze.getNeighbors(location[0],location[1])
 
         if(maze.isObjective(location[0],location[1])):
-            return(visited,num_states_explored)
+            path.append( (location[0], location[1]) )
+            return(path,num_states_explored)
 
         if(visited[location[0]][location[1]] == False):
             visited[location[0]][location[1]] = True
+            path.append( (location[0], location[1]) )
+
             for i in neighbors:
-                distance = heuristic(maze,i) # switch this heuristic
-                priority_que.put([distance,i]) 
+                new_cost = cost_so_far[location] + 1
+                if i not in cost_so_far or new_cost < cost_so_far[i]:
+                    cost_so_far[i] = new_cost
+                    distance = new_cost + heuristic(maze,i)
+                    frontier.put([distance,i])
 
     return [], 0
 
@@ -177,4 +190,4 @@ def heuristic(maze, cur_pos):
     goal = objectives[-1]
     return abs(goal[0] - cur_pos[0]) + abs(goal[1] - cur_pos[1])
 
-def astar_heuristic(maze,cur_pos):
+#def astar_heuristic(maze,cur_pos):
