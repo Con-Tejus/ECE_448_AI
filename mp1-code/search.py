@@ -134,6 +134,30 @@ def astar(maze):
     # TODO: Write your code here
     # return path, num_states_explored
     # use the manhattan distance from the current position to the goal as the heuristic function 
+    cur_pos = maze.getStart() # is characterized as a tuple(row,column)
+    dimensions = maze.getDimensions() # returns num of row,columns
+    visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
+    num_states_explored = 0;
+    frontier = PriorityQueue()
+    distance = heuristic(maze,cur_pos)
+    priority_que.put([distance,cur_pos])
+
+    while not frontier.empty():
+
+        cur_pos = frontier.get()
+        distance = cur_pos[0]
+        location = cur_pos[1]
+        num_states_explored += 1
+        neighbors = maze.getNeighbors(location[0],location[1])
+
+        if(maze.isObjective(location[0],location[1])):
+            return(visited,num_states_explored)
+
+        if(visited[location[0]][location[1]] == False):
+            visited[location[0]][location[1]] = True
+            for i in neighbors:
+                distance = heuristic(maze,i) # switch this heuristic
+                priority_que.put([distance,i]) 
 
     return [], 0
 
@@ -141,3 +165,5 @@ def heuristic(maze, cur_pos):
     objectives = maze.getObjectives()
     goal = objectives[-1]
     return abs(goal[0] - cur_pos[0]) + abs(goal[1] - cur_pos[1])
+
+def astar_heuristic(maze,cur_pos):
