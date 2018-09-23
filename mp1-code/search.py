@@ -43,13 +43,15 @@ def bfs(maze):
     dimensions = maze.getDimensions() # returns num of row,columns
     visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
     path = []
-    #Matrix = [[0 for x in range(w)] for y in range(h)]
+    optimal = []
+    prev_list = [[() for x in range(dimensions[1])] for y in range(dimensions[0])]
     num_states_explored = 0
     q = queue.Queue()
     q.put(cur_pos)
     visited[cur_pos[0]][cur_pos[1]] = True
-    path.append( (cur_pos[0], cur_pos[1]) )
+    #path.append( (cur_pos[0], cur_pos[1]) )
     num_states_explored += 1
+    prev = cur_pos
     #possibly use a queue to check which nodes we have visited
     #use
     if(maze.isObjective(cur_pos[0],cur_pos[1])):
@@ -58,19 +60,26 @@ def bfs(maze):
     while not q.empty():
         
         cur_pos = q.get()
+        #prev_list[cur_pos[0]][cur_pos[1]] = prev
         neighbors = maze.getNeighbors(cur_pos[0],cur_pos[1])
+        path.append( (cur_pos[0], cur_pos[1],prev) )
+        num_states_explored += 1
+        #prev = cur_pos
+    
+        if maze.isObjective( cur_pos[0],cur_pos[1]):
+            optimal.append((cur_pos[0],cur_pos[1]))
+            prev = cur_pos
+            while prev != maze.getStart():
+                prev = prev_list[prev[0]][prev[1]]
+                optimal.append((prev[0],prev[1]))
+            # optimal = reversed(optimal)
+            return optimal,num_states_explored
 
-        #since it is bfs need to visit one entire layer first then move onto the next layer
         for i in neighbors:
-            #print(i[0])
-            #print(i[1])
             if visited[i[0]][i[1]] == False:
                 q.put(i)
                 visited[i[0]][i[1]] = True
-                path.append( (i[0], i[1]) )
-                num_states_explored += 1
-                if maze.isObjective( i[0],i[1] ) :
-                    return path,num_states_explored
+                prev_list[i[0]][i[1]] = cur_pos
         
     
 
@@ -85,6 +94,9 @@ def dfs(maze):
     dimensions = maze.getDimensions()
     visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
     path = []
+    optimal = []
+    prev = cur_pos
+    prev_list = [[() for x in range(dimensions[1])] for y in range(dimensions[0])]
     num_states_explored = 0
 
     stack = [cur_pos]
@@ -97,9 +109,15 @@ def dfs(maze):
             path.append( (cur_pos[0], cur_pos[1]) )
             num_states_explored += 1  
             if(maze.isObjective(cur_pos[0],cur_pos[1])):
+                prev = cur_pos
+                # while prev != maze.getStart():
+                #     prev = prev_list[prev[0]][prev[1]]
+                #     optimal.append((prev[0],prev[1]))
                 return(path,num_states_explored)
+
             for i in neighbors:
                 stack.append(i)
+                prev_list[i[0]][i[1]] = cur_pos
     return [], 0
 
 
@@ -112,11 +130,15 @@ def greedy(maze):
     cur_pos = maze.getStart() # is characterized as a tuple(row,column)
     dimensions = maze.getDimensions() # returns num of row,columns
     visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
+    #came_from = [[() for x in range(dimensions[1])] for y in range(dimensions[0])]
     path = []
+    optimal = []
     num_states_explored = 0
     priority_que = queue.PriorityQueue()
     distance = heuristic(maze,cur_pos)
     priority_que.put([distance,cur_pos])
+    #came_from[cur_pos[0]][cur_pos[1]] = None
+    #prev = cur_pos
 
     if(maze.isObjective(cur_pos[0],cur_pos[1])):
         return(path,num_states_explored)
@@ -137,6 +159,7 @@ def greedy(maze):
             for i in neighbors:
                 distance = heuristic(maze,i)
                 priority_que.put([distance,i])
+            
 
     return [], 0
 
@@ -148,40 +171,47 @@ def astar(maze):
     cur_pos = maze.getStart() # is characterized as a tuple(row,column)
     dimensions = maze.getDimensions() # returns num of row,columns
     visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
+    came_from = [[() for x in range(dimensions[1])] for y in range(dimensions[0])]
     num_states_explored = 0;
     frontier = queue.PriorityQueue()
     path = []
     distance = heuristic(maze,cur_pos)
     frontier.put([distance,cur_pos])
-    came_from = {}
-    came_from[cur_pos] = None
+    came_from[cur_pos[0]][cur_pos[1]] = None
     cost_so_far = {}
     cost_so_far[cur_pos] = 0
-
+    prev = cur_pos
+    optimal = []
     
 
     while not frontier.empty():
 
         cur_pos = frontier.get()
-        distance = cur_pos[0]
-        location = cur_pos[1]
         num_states_explored += 1
+        location = cur_pos[1]
+        #path.append( (location[0], location[1]))
         neighbors = maze.getNeighbors(location[0],location[1])
 
         if(maze.isObjective(location[0],location[1])):
-            path.append( (location[0], location[1]) )
-            return(path,num_states_explored)
+            prev = location
+            while prev != maze.getStart():
+                prev = came_from[prev[0]][prev[1]]
+                optimal.append((prev[0],prev[1]))
+
+            optimal.append( (location[0], location[1]) )
+            return(optimal,num_states_explored)
 
         if(visited[location[0]][location[1]] == False):
             visited[location[0]][location[1]] = True
             path.append( (location[0], location[1]) )
 
-            for i in neighbors:
-                new_cost = cost_so_far[location] + 1
-                if i not in cost_so_far or new_cost < cost_so_far[i]:
-                    cost_so_far[i] = new_cost
-                    distance = new_cost + heuristic(maze,i)
-                    frontier.put([distance,i])
+        for i in neighbors:
+            new_cost = cost_so_far[location] + 1
+            if i not in cost_so_far or new_cost < cost_so_far[i]:
+                cost_so_far[i] = new_cost
+                distance = new_cost + heuristic(maze,i)
+                frontier.put([distance,i])
+                came_from[i[0]][i[1]] = location
 
     return [], 0
 
