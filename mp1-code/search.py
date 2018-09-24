@@ -217,9 +217,8 @@ def greedy(maze):
 def astar(maze):
     # TODO: Write your code here
     # return path, num_states_explored
-    # use the manhattan distance from the current position to the goal as the heuristic function 
-    cur_pos = maze.getStart() # is characterized as a tuple(row,column)
-    dimensions = maze.getDimensions() # returns num of row,columns
+    cur_pos = maze.getStart()
+    dimensions = maze.getDimensions()
     visited = [[False for x in range(dimensions[1])] for y in range(dimensions[0])]
     came_from = [[() for x in range(dimensions[1])] for y in range(dimensions[0])]
     num_states_explored = 0;
@@ -227,57 +226,66 @@ def astar(maze):
     path = []
     distance = heuristic(maze,cur_pos)
     frontier.put([distance,cur_pos])
-    #came_from[cur_pos[0]][cur_pos[1]] = None
     cost_so_far = {}
-    cost_so_far[cur_pos] = 0
+    #cost_so_far[cur_pos] = 0
     prev = cur_pos
     optimal = []
-    obj_deleted = [cur_pos]
+    #obj_deleted = [cur_pos]
+    obj_deleted = []
     obj_list = maze.getObjectives()
     count = 0
 
     while not frontier.empty():
         count +=1
         cur_pos = frontier.get()
-        num_states_explored += 1
         location = cur_pos[1]
+        print("the current location is: {}".format(location))
         neighbors = maze.getNeighbors(location[0],location[1])
 
-        if(maze.isObjective(location[0],location[1])):
+        if(location in obj_list):
+            print("OBJECTIVE FOUND")
             obj_deleted.append((location[0],location[1]))
             objIndex  = obj_list.index(location)
             del obj_list[objIndex]
+            print(obj_list)
             prev = location
+            cost_so_far.clear()
+            cost_so_far[location] = 0
+            frontier.queue.clear()
             if not obj_list:
                 print(obj_deleted)
                 for i in reversed(obj_deleted):
                     print(i)
                     print("deleted")
+                    # if i == (7,1):
+                    #     continue
                     while prev != i:
-                        print(prev)
                         print("check")
                         prev = came_from[prev[0]][prev[1]]
                         print(prev)
                         optimal.append((prev[0],prev[1]))
 
-                    #optimal.append( (location[0], location[1]) )
                 return(optimal,num_states_explored)
 
         if(visited[location[0]][location[1]] == False):
             visited[location[0]][location[1]] = True
+            num_states_explored += 1
 
         for i in neighbors:
-
-            # if(count == 1):
-            #     new_cost = 0 + 1
-            # else:
-            new_cost = cost_so_far[location] + 1
+            print(i)
+            if(count == 1):
+                new_cost = 0 + 1
+            else:
+                new_cost = cost_so_far[location] + 1
 
             if i not in cost_so_far or new_cost < cost_so_far[i]:
                 cost_so_far[i] = new_cost
                 distance = new_cost + astar_heuristic(maze,i,obj_list)
                 frontier.put([distance,i])
-                came_from[i[0]][i[1]] = location
+                if location not in maze.getObjectives() or came_from[i[0]][i[1]] == ():
+                    came_from[i[0]][i[1]] = location
+                # if visited[location[0]][location[1]] or came_from[i[0]][i[1]] == ():
+                #     came_from[i[0]][i[1]] = location
 
     return [], 0
 
