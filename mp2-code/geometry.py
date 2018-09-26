@@ -69,7 +69,7 @@ def doesArmTouchObstacles(armPos, obstacles):
             B = 2*( m * b - m * circle[1] - circle[0])
             C = (circle[1]**2 - circle[2]**2 + circle[0]**2 - 2*(b * circle[1]) + b**2)
             x = quadratic(A,B,C)
-            print(x)
+            #print("The x values are:{} The link is:{}".format(x,link))
             if(x[0] != -1):
                 if(x[1] == -1):
                     x.remove(x[1])
@@ -81,7 +81,8 @@ def doesArmTouchObstacles(armPos, obstacles):
                     linkDistance = math.sqrt((y2-y1)**2 + (x2-x1)**2)
                     pointToStart = math.sqrt((y[i]-y1)**2 + (x[i]-x1)**2)
                     pointToEnd = math.sqrt((y[i]-y2)**2 + (x[i]-x2)**2)
-                    if(pointToEnd + pointToStart == linkDistance):
+                    #print(linkDistance)
+                    if(linkDistance - 0.5 <=(pointToEnd + pointToStart) <= linkDistance+0.5):
                         return True
                     
                 
@@ -121,11 +122,29 @@ def isArmWithinWindow(armPos, window):
         Return:
             True if all parts are in the window. False it not.
     """
-    return True
+    check = True
+
+    for arm in armPos:
+        linkStart = arm[0]
+        linkEnd = arm[1]
+        x1 = linkStart[0]
+        y1 = linkStart[1]
+        x2 = linkEnd[0]
+        y2 = linkEnd[1]
+        #print("x:{} y:{}".format(x1,y1))
+        
+       
+        if((0<=x1<=window[0]) and (0<=x2<=window[0]) and (0<=y1<=window[1]) and (0<=y2<window[1])):
+            check = True
+        else:
+            
+            return False
+
+    return check
 
 def quadratic(A,B,C):
     
-    D = B**2-4*A*C # discriminant
+    D = (B**2)-(4*A*C) # discriminant
     x1 = -1
     x2 = -1
     if D < 0:
