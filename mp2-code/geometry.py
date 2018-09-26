@@ -30,8 +30,7 @@ def computeCoordinate(start, length, angle):
     x = length*math.cos(radians)
     y = length*math.sin(radians)
 
-    end_pos = (start[0]+x,start[1]+y)
-
+    end_pos = (start[0]+x,start[1]-y)
     return end_pos
     pass
 
@@ -70,6 +69,7 @@ def doesArmTouchObstacles(armPos, obstacles):
             B = 2*( m * b - m * circle[1] - circle[0])
             C = (circle[1]**2 - circle[2]**2 + circle[0]**2 - 2*(b * circle[1]) + b**2)
             x = quadratic(A,B,C)
+            print(x)
             if(x[0] != -1):
                 if(x[1] == -1):
                     x.remove(x[1])
