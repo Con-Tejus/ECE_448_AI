@@ -21,11 +21,18 @@ def computeCoordinate(start, length, angle):
         Args:
             start (tuple): base of the arm link. (x-coordinate, y-coordinate)
             length (int): length of the arm link
-            angle (int): degree of the arm link from x-axis to couter-clockwise
+            angle (int): degree of the arm link from x-axis to counter-clockwise
 
         Return:
             End position of the arm link, (x-coordinate, y-coordinate)
     """
+    radians = angle*(math.pi/180)
+    x = length*math.cos(radians)
+    y = length*math.sin(radians)
+
+    end_pos = (start[0]+x,start[1]+y)
+
+    return end_pos
     pass
 
 def doesArmTouchObstacles(armPos, obstacles):
@@ -38,7 +45,52 @@ def doesArmTouchObstacles(armPos, obstacles):
         Return:
             True if touched. False it not.
     """    
-    return False
+    
+    check = False
+    for link in armPos:
+
+        linkStart = link[0]
+        linkEnd = link[1]
+        x1 = linkStart[0]
+        y1 = linkStart[1]
+        x2 = linkEnd[0]
+        y2 = linkEnd[1]
+        if x1 == x2:
+            m = float("inf")
+        else:
+            m = (y2 - y1) / (x2 - x1)   #y = mx + b # starts off at a division of zero since both start and end are at the same x location
+        b = y1 - m * x1
+        #a = -m
+        
+        #C = b               # Ax + By = C
+        #C *= -1
+        linkDistance = math.sqrt((y2-y1)**2 + (x2-x1)**2)
+        for circle in obstacles:
+            A = (m ** 2 + 1)
+            B = 2*( m * b - m * circle[1] - circle[0])
+            C = (circle[1]**2 - circle[2]**2 + circle[0]**2 - 2*(b * circle[1]) + b**2)
+            x = quadratic(A,B,C)
+            if(x[0] != -1):
+                if(x[1] == -1):
+                    x.remove(x[1])
+                    y = [m*x[0]+b]
+                else:
+                    y = [m*x[0]+b,m*x[1]+b]
+
+                for i in range(0,len(x)):
+                    linkDistance = math.sqrt((y2-y1)**2 + (x2-x1)**2)
+                    pointToStart = math.sqrt((y[i]-y1)**2 + (x[i]-x1)**2)
+                    pointToEnd = math.sqrt((y[i]-y2)**2 + (x[i]-x2)**2)
+                    if(pointToEnd + pointToStart == linkDistance):
+                        return True
+                    
+                
+            
+                
+    return check
+
+        
+
 
 def doesArmTouchGoals(armEnd, goals):
     """Determine whether the given arm links touch goals
@@ -50,6 +102,12 @@ def doesArmTouchGoals(armEnd, goals):
         Return:
             True if touched. False it not.
     """
+    for circle in goals:
+        x_incircle = math.pow((armEnd[0] - circle[0]),2)
+        y_incircle = math.pow((armEnd[1] - circle[1]),2)
+        in_circle = x_incircle + y_incircle
+        if(in_circle <= math.pow(circle[2],2)):
+            return True
     return False
 
 
@@ -64,3 +122,18 @@ def isArmWithinWindow(armPos, window):
             True if all parts are in the window. False it not.
     """
     return True
+
+def quadratic(A,B,C):
+    
+    D = B**2-4*A*C # discriminant
+    x1 = -1
+    x2 = -1
+    if D < 0:
+        return ([x1,x2])
+    elif D == 0:
+        x1 = (-B+math.sqrt(D))/(2*A)
+        return([x1,x2])
+    else:
+        x1 = (-B+math.sqrt(D))/(2*A)
+        x2 = (-B-math.sqrt(D))/(2*A)
+        return ([x1,x2])
