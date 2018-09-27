@@ -81,7 +81,7 @@ def doesArmTouchObstacles(armPos, obstacles):
                     linkDistance = math.sqrt((y2-y1)**2 + (x2-x1)**2)
                     pointToStart = math.sqrt((y[i]-y1)**2 + (x[i]-x1)**2)
                     pointToEnd = math.sqrt((y[i]-y2)**2 + (x[i]-x2)**2)
-                    #print(linkDistance)
+                    print(pointToEnd + pointToStart)
                     if(linkDistance - 0.5 <=(pointToEnd + pointToStart) <= linkDistance+0.5):
                         return True
                     

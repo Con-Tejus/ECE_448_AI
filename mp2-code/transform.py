@@ -34,5 +34,11 @@ def transformToMaze(arm, goals, obstacles, window, granularity):
             Maze: the maze instance generated based on input arguments.
 
     """
+    input_map = [window[0]][window[1]] #list 2d-array where alpha is the row and beta is the columns
+    
+    offsets = #min value of alpha and beta
+
+    maze = Maze(,,granularity)
+     
     
     pass
