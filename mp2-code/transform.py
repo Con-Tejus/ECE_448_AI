@@ -34,11 +34,30 @@ def transformToMaze(arm, goals, obstacles, window, granularity):
             Maze: the maze instance generated based on input arguments.
 
     """
-    input_map = [window[0]][window[1]] #list 2d-array where alpha is the row and beta is the columns
-    
-    offsets = #min value of alpha and beta
+    dimensions = arm.getArmAngle()
+    min_max = arm.getArmLimit()
+    offsets = [min_max[0][0],min_max[1][0]] #min value of alpha and beta
+   
+    row = (((min_max[0][1]-min_max[0][0])//granularity)+1)
+    column = (((min_max[1][1]-min_max[1][0])//granularity)+1)
+    input_map = [[SPACE_CHAR for i in range(column)] for j in range(row)]
 
-    maze = Maze(,,granularity)
-     
+    for i in range(row): # alpha
+        for j in range(column): # beta
+            arm.setArmAngle((i,j,0))
+            armPos = arm.getArmPos()
+            armEnd = arm.getEnd()
+            if(doesArmTouchObstacles(armPos,obstacles)):
+                input_map[i][j] = WALL_CHAR
+            elif(doesArmTouchGoals(armEnd,goals)):
+                input_map[i][j] = OBJECTIVE_CHAR
+        
     
+    
+    input_map[dimensions[0]//granularity][dimensions[1]//granularity] = START_CHAR
+
+    maze = Maze(input_map,offsets,granularity)
+     
+    return maze
+
     pass
