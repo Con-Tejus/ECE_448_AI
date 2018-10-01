@@ -42,22 +42,23 @@ def transformToMaze(arm, goals, obstacles, window, granularity):
     column = (((min_max[1][1]-min_max[1][0])//granularity)+1)
     input_map = [[SPACE_CHAR for i in range(column)] for j in range(row)]
 
-    for i in range(row): # alpha
-        for j in range(column): # beta
-            arm.setArmAngle((i,j,0))
+    
+    for i in range(0,row): # alpha
+        for j in range(0,column): # beta
+            alpha = i*2
+            beta = j*2-150
+            arm.setArmAngle((alpha,beta,0))
             armPos = arm.getArmPos()
             armEnd = arm.getEnd()
-            if(doesArmTouchObstacles(armPos,obstacles)):
+            if((doesArmTouchObstacles(armPos,obstacles)) and not(doesArmTouchGoals(armEnd,goals)) or not(isArmWithinWindow(armPos,window))):
                 input_map[i][j] = WALL_CHAR
             elif(doesArmTouchGoals(armEnd,goals)):
                 input_map[i][j] = OBJECTIVE_CHAR
-        
+            
     
-    
-    input_map[dimensions[0]//granularity][dimensions[1]//granularity] = START_CHAR
+    input_map[dimensions[0]//granularity][(dimensions[1]+150)//granularity] = START_CHAR
 
     maze = Maze(input_map,offsets,granularity)
      
     return maze
 
-    pass
