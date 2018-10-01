@@ -36,6 +36,13 @@ def transformToMaze(arm, goals, obstacles, window, granularity):
     """
     dimensions = arm.getArmAngle()
     min_max = arm.getArmLimit()
+    # if(len(min_max) == 1):
+    #     offsets = [min_max[0][0],0]
+    #     maze = Maze([0],offsets,granularity)
+    #     column = 0
+    #     row = (((min_max[0][1]-min_max[0][0])//granularity)+1)
+    #     return maze
+    
     offsets = [min_max[0][0],min_max[1][0]] #min value of alpha and beta
    
     row = (((min_max[0][1]-min_max[0][0])//granularity)+1)
@@ -45,8 +52,13 @@ def transformToMaze(arm, goals, obstacles, window, granularity):
     
     for i in range(0,row): # alpha
         for j in range(0,column): # beta
-            alpha = i*2
-            beta = j*2-150
+            alpha = i*granularity
+            if(min_max[1][0]>=0):
+                beta = j*granularity-min_max[1][0]
+            else:
+                beta = j*granularity+min_max[1][0]
+
+            
             arm.setArmAngle((alpha,beta,0))
             armPos = arm.getArmPos()
             armEnd = arm.getEnd()
@@ -56,7 +68,7 @@ def transformToMaze(arm, goals, obstacles, window, granularity):
                 input_map[i][j] = OBJECTIVE_CHAR
             
     
-    input_map[dimensions[0]//granularity][(dimensions[1]+150)//granularity] = START_CHAR
+    input_map[dimensions[0]//granularity][(dimensions[1]+min_max[1][1])//granularity] = START_CHAR
 
     maze = Maze(input_map,offsets,granularity)
      
