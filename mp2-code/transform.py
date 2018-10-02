@@ -36,12 +36,7 @@ def transformToMaze(arm, goals, obstacles, window, granularity):
     """
     dimensions = arm.getArmAngle()
     min_max = arm.getArmLimit()
-    # if(len(min_max) == 1):
-    #     offsets = [min_max[0][0],0]
-    #     maze = Maze([0],offsets,granularity)
-    #     column = 0
-    #     row = (((min_max[0][1]-min_max[0][0])//granularity)+1)
-    #     return maze
+   
     
     offsets = [min_max[0][0],min_max[1][0]] #min value of alpha and beta
    

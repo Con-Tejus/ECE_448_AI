@@ -46,8 +46,9 @@ def doesArmTouchObstacles(armPos, obstacles):
     """    
     
     check = False
-    for link in armPos:
 
+    for link in armPos:
+        #store the start and end points of each link
         linkStart = link[0]
         linkEnd = link[1]
         x1 = linkStart[0]
@@ -58,30 +59,32 @@ def doesArmTouchObstacles(armPos, obstacles):
             m = float("inf") #if the x coordinates of the start of the link and the end of the link then we set a lower bound
         else:
             m = (y2 - y1) / (x2 - x1)   #y = mx + b # starts off at a division of zero since both start and end are at the same x location
-        b = y1 - m * x1
-        #a = -m
-        
-        #C = b               # Ax + By = C
-        #C *= -1
+
+        b = y1 - m * x1 # the y intercept
+
         linkDistance = math.sqrt((y2-y1)**2 + (x2-x1)**2)
         for circle in obstacles:
-            A = (m ** 2 + 1)
+            # Calculate the parameters needed for the quadratic formula
+            A = (m ** 2 + 1) 
             B = 2*( m * b - m * circle[1] - circle[0])
             C = (circle[1]**2 - circle[2]**2 + circle[0]**2 - 2*(b * circle[1]) + b**2)
+
             x = quadratic(A,B,C)
-            #print("The x values are:{} The link is:{}".format(x,link))
-            if(x[0] != -1):
-                if(x[1] == -1):
+
+            if(x[0] != -1): #if the quadratic returns a positive value then theres an intersection point
+                if(x[1] == -1): #theres only one intersection point needed to be checked
                     x.remove(x[1])
                     y = [m*x[0]+b]
                 else:
                     y = [m*x[0]+b,m*x[1]+b]
 
+                #will check if the intersection is happening by the link or just the line the link represents
                 for i in range(0,len(x)):
                     linkDistance = math.sqrt((y2-y1)**2 + (x2-x1)**2)
                     pointToStart = math.sqrt((y[i]-y1)**2 + (x[i]-x1)**2)
                     pointToEnd = math.sqrt((y[i]-y2)**2 + (x[i]-x2)**2)
-            
+
+                    #if the distances match then the link is touching an obstacle
                     if(linkDistance - 0.5 <=(pointToEnd + pointToStart) <= linkDistance+0.5):
                         return True
                     
