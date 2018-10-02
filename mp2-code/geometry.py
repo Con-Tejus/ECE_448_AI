@@ -26,11 +26,11 @@ def computeCoordinate(start, length, angle):
         Return:
             End position of the arm link, (x-coordinate, y-coordinate)
     """
-    radians = angle*(math.pi/180)
-    x = length*math.cos(radians)
-    y = length*math.sin(radians)
+    radians = angle*(math.pi/180)   #switch the angle to radians  
+    x = length*math.cos(radians)    #find the horizontal length
+    y = length*math.sin(radians)    #find the vertical length
 
-    end_pos = (start[0]+x,start[1]-y)
+    end_pos = (start[0]+x,start[1]-y) #add the hor. length to the x and the vert. length to the y to find the end_pos
     return end_pos
     pass
 
@@ -55,7 +55,7 @@ def doesArmTouchObstacles(armPos, obstacles):
         x2 = linkEnd[0]
         y2 = linkEnd[1]
         if x1 == x2:
-            m = float("inf")
+            m = float("inf") #if the x coordinates of the start of the link and the end of the link then we set a lower bound
         else:
             m = (y2 - y1) / (x2 - x1)   #y = mx + b # starts off at a division of zero since both start and end are at the same x location
         b = y1 - m * x1
@@ -105,9 +105,9 @@ def doesArmTouchGoals(armEnd, goals):
     """
     for circle in goals:
         x_incircle = math.pow((armEnd[0] - circle[0]),2)
-        y_incircle = math.pow((armEnd[1] - circle[1]),2)
-        in_circle = x_incircle + y_incircle
-        if(in_circle <= math.pow(circle[2],2)):
+        y_incircle = math.pow((armEnd[1] - circle[1]),2) 
+        in_circle = x_incircle + y_incircle #find the euclidean distance from the end of the arm to the center of the circle.
+        if(in_circle <= math.pow(circle[2],2)): #if the euc. distance is less than or equal to the range of the circle then we are touch the goal
             return True
     return False
 
@@ -134,7 +134,7 @@ def isArmWithinWindow(armPos, window):
         #print("x:{} y:{}".format(x1,y1))
         
        
-        if((0<=x1<=window[0]) and (0<=x2<=window[0]) and (0<=y1<=window[1]) and (0<=y2<window[1])):
+        if((0<=x1<=window[0]) and (0<=x2<=window[0]) and (0<=y1<=window[1]) and (0<=y2<window[1])): #if the coordinates of the start of the link and the end of the link are within bounds then return true
             check = True
         else:
             
@@ -148,11 +148,11 @@ def quadratic(A,B,C):
     x1 = -1
     x2 = -1
     if D < 0:
-        return ([x1,x2])
+        return ([x1,x2]) #if discriminant is -1 we have nothing
     elif D == 0:
-        x1 = (-B+math.sqrt(D))/(2*A)
+        x1 = (-B+math.sqrt(D))/(2*A) #if disc. is 0 then we have one point
         return([x1,x2])
     else:
-        x1 = (-B+math.sqrt(D))/(2*A)
+        x1 = (-B+math.sqrt(D))/(2*A) #if disc is positive, then we have two points
         x2 = (-B-math.sqrt(D))/(2*A)
         return ([x1,x2])
