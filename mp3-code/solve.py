@@ -12,13 +12,18 @@ def solve(constraints):
     possible_col = [gen_row(len(constraints[1]),x) for x in constraints[1]]
     rowsSoFar = []
 
-    """
-        While (not solution):
-            select most constrained row
-            add row to set of rows
-            restrict cols
-            if len one col has no option backtrack
-    """
+def solve(rowsSoFar, possible_row, possible_col): #recursive
+    for row in possible_row[0]:
+        rowsSoFar.append(row)
+        ret = isSafe(rowsSoFar, possible_col)
+        if ret[0]:
+            if len(rowsSoFar) == target:
+                return rowsSoFar
+            return solve(rowsSoFar, possible_row[1:],ret[1])
+        else:
+            
+        rowsSoFar = rowsSoFar[:-1]
+
 def isSafe(rowsSoFar, possible_col):
     for row in rowsSoFar:
         num_row = row[0]
@@ -36,7 +41,6 @@ def isSafe(rowsSoFar, possible_col):
 
 
 
-def restrictCols(rowsSoFar, possible_col):
 
     """
     Implement me!!!!!!!
