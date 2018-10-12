@@ -2,6 +2,44 @@
 import numpy as np 
 import argparse
 from solve import solve
+import pygame
+import time
+from pygame.locals import *
+
+def view(solution, save):
+    height = solution.shape[0]
+    width = solution.shape[1]
+    block_size = 20
+    offset = 32
+    display = pygame.display.set_mode(
+        (
+            width * block_size + 2 * offset,
+            height * block_size + 2 * offset, 
+            
+        ), 0, 0)
+    
+    max_color = float(max(1, np.max(solution)))
+    for row in range(len(solution)):
+        for col in range(len(solution[0])):
+            shade = 255 - (solution[row,col]/max_color)*255
+            color = (shade, shade, shade)
+            rect = pygame.Rect(offset + col * block_size, 
+                               offset + row * block_size, 
+                               block_size, 
+                               block_size
+                    )
+            pygame.draw.rect(display, color, rect)
+    pygame.display.update()
+    if save is not None:
+        pygame.image.save(display, save)
+        return
+    while True:
+        pygame.event.pump()
+        keys = pygame.key.get_pressed() 
+        if (keys[K_ESCAPE]):
+            pygame.display.quit()
+            return
+    #time.sleep(20)
 
 def runs(rowcol):
     """
@@ -50,16 +88,17 @@ class Nonogram:
                 rowcol.append(solution[i][j])
             if not (runs(rowcol) == constraints):
                 return False
-        return True
-            
+        return True            
 
 def main():
     parser = argparse.ArgumentParser(description='Nonogram runner')
-    parser.add_argument('constraints_file', type=str,
-                    help='.npy file containing constraints')
+    parser.add_argument('constraints_file', type=str, help='.npy file containing constraints')
+    parser.add_argument('--save', dest="output_file_path", type=str, default = None, help='save output to image file at output_file_path')
     args = parser.parse_args()
     nono = Nonogram(args.constraints_file)
     solution = solve(nono.constraints)
+    view(solution, args.output_file_path)
+    np.save(args.constraints_file[:-4] + "_solution.npy", solution)
     if nono.isValidSolution(solution):
         print('\x1b[6;30;42m' + 'Success!' + '\x1b[0m')
     else:
