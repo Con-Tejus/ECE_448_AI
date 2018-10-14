@@ -2,26 +2,6 @@ import numpy as np
 import copy
 import time
 
-#AC3
-# def makeArcs(rows, columns):
-#     arcs = []
-#     for row in rows:
-#         for col in columns:
-#             arcs.append((row,col))
-#             arcs.append((col,row))
-#     return arcs
-#
-# # def arcConsistency(arcs):
-# #     while(len(arcs)):
-# #         arc = arcs[0]
-# #         arcs = arcs[1:]
-#
-# def ac3(rows, columns):
-#     arcs = makeArcs(rows, columns)
-#     while(len(arcs)):
-#         arc = arcs[0]
-#         arcs = [1:]
-
 def reduceRows(rows,columns):
     out_rows = []
     for row in rows:
@@ -42,66 +22,49 @@ def reduceRows(rows,columns):
         out_rows.append((num_row,reduced_rows))
     return out_rows
 
-
-        #
-        # for row_idx, row_val in enumerate(curr_row):
-        #     curr_col_options = possible_col[row_idx]
-        #     for col_idx, curr_col in enumerate(curr_col_options):
-        #         if curr_col[num_row] != row_val:
-        #             curr_col_options[col_idx] = None
-        #     curr_col_options = [x for x in curr_col_options if x != None]
-        #     if len(curr_col_options) == 0:
-        #         return False, None
-        #     possible_col[row_idx] = curr_col_options
-
-
-
-
 def getKey(item):
     return len(item[1])
 
 def format(thing):
     sorted_thing = sorted(thing)
-    # print(sorted_thing)
     formatted = []
-    # for row in reversed(sorted_thing):
-    #     formatted.append([x for x in reversed(row[1])])
     for row in sorted_thing:
         formatted.append(row[1])
     return formatted
 
 def solve(constraints):
     starttime = time.time()
-    print(constraints[0])
-    # time()
-    possible_row = [(idx,gen_row(len(constraints[1]),x)) for idx,x in enumerate(constraints[0])]
+    # print(constraints[0])
+    # possible_row = [(idx,gen_row(len(constraints[1]),x)) for idx,x in enumerate(constraints[0])]
+    possible_row = []
+    for idx, x in enumerate(constraints[0]):
+        oldSeq = [None] * len(constraints[1])
+        out= []
+        out = make_combs(out,oldSeq, len(constraints[1]),0,0,0,x)
+        possible_row.append((idx,out))
     sorted_possible_row = sorted(possible_row,key=getKey)
-    possible_col = [gen_row(len(constraints[0]),x) for x in constraints[1]]
+    possible_col = []
+    for idx, x in enumerate(constraints[1]):
+        oldSeq = [None] * len(constraints[0])
+        out = []
+        out = make_combs(out,oldSeq, len(constraints[0]),0,0,0,x)
+        possible_col.append(out)
     for idx,curr in enumerate(possible_col):
         if curr == []:
             possible_col[idx] = [[0]*len(possible_col)]
-    for idx, curr in enumerate(sorted_possible_row):
-        if curr[1] == []:
-            curr = (curr[0],[[0]*len(constraints[1])])
-        sorted_possible_row[idx] = curr
-        # print(curr)
     rowsSoFar = []
     target = len(possible_row)
     to_be_formatted = solveR(rowsSoFar,sorted_possible_row,possible_col,target)
-    # print(to_be_formatted)
     endtime = time.time()
     print(endtime-starttime)
-    # print(time.asctime(time.gmtime()))
     sol = np.array(format(to_be_formatted))
-    # print(sol)
     return sol
 
 def solveR(rowsSoFar, sorted_possible_row, possible_col,target): #recursive
-    # print('solveR')
     if len(rowsSoFar) == target:
         return rowsSoFar
-    # print(sorted_possible_row)
     sorted_possible_row_copy = copy.deepcopy(sorted_possible_row)
+    sum = 0
     sorted_possible_row_copy = reduceRows(sorted_possible_row_copy,possible_col)
     curr_row_set = sorted_possible_row_copy[0]
     num_row = curr_row_set[0]
@@ -117,9 +80,7 @@ def solveR(rowsSoFar, sorted_possible_row, possible_col,target): #recursive
 
 
 def isSafe(rowsSoFar, given_possible_col):
-    # print('isSafe')
     possible_col = copy.deepcopy(given_possible_col)
-    # print(possible_col)
     if len(rowsSoFar) == 0:
         return True, possible_col
     for row in rowsSoFar:
@@ -211,9 +172,38 @@ def isSafe(rowsSoFar, given_possible_col):
 
 
     """
-    dim0 = len(constraints[0])
-    dim1 = len(constraints[1])
-    return np.random.randint(2, size=(dim0, dim1))
+    # dim0 = len(constraints[0])
+    # dim1 = len(constraints[1])
+    # return np.random.randint(2, size=(dim0, dim1))
+
+def make_combs(out, oldSeq, lineLength, lastColor, offSet, index, constraints):
+    # print(offSet,lineLength)
+    # print(out)
+    if offSet < lineLength:
+        if index < len(constraints):
+            curr_constraint = constraints[index]
+            color = curr_constraint[1]
+            size = curr_constraint[0]
+
+            notEmptyAndSame = lastColor != 0 and lastColor != color
+            fitToTheGrid = (offSet + size - 1) < lineLength
+
+            if (notEmptyAndSame or lastColor == 0) and fitToTheGrid:
+                for i in range(size):
+                    oldSeq[offSet+i] = color
+
+                out = make_combs(out,oldSeq,lineLength,color,offSet+size,index+1,constraints)
+                for i in range(size):
+                    oldSeq[offSet+i] = 0
+        oldSeq[offSet] = 0
+        out = make_combs(out,oldSeq,lineLength,0,offSet+1,index,constraints)
+    else:
+        if len(constraints) <= index:
+            out.append(copy.deepcopy(oldSeq))
+    return out
+
+
+
 
 def gen_row(w, s):
     """Create all patterns of a row or col that match given runs."""
@@ -227,6 +217,4 @@ def gen_row(w, s):
     sum = 0
     for i in s:
         sum+= i[0]
-
-
     return [x[1:] for x in gen_seg([[i[1]] * i[0] for i in s], w + 1 - sum)]
