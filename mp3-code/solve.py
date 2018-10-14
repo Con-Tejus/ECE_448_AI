@@ -1,7 +1,62 @@
 import numpy as np
 import copy
+import time
 
 #AC3
+# def makeArcs(rows, columns):
+#     arcs = []
+#     for row in rows:
+#         for col in columns:
+#             arcs.append((row,col))
+#             arcs.append((col,row))
+#     return arcs
+#
+# # def arcConsistency(arcs):
+# #     while(len(arcs)):
+# #         arc = arcs[0]
+# #         arcs = arcs[1:]
+#
+# def ac3(rows, columns):
+#     arcs = makeArcs(rows, columns)
+#     while(len(arcs)):
+#         arc = arcs[0]
+#         arcs = [1:]
+
+def reduceRows(rows,columns):
+    out_rows = []
+    for row in rows:
+        num_row = row[0]
+        pos_rows = row[1]
+        for curr_row_idx,curr_row in enumerate(pos_rows):
+            for row_idx, row_val in enumerate(curr_row):
+                curr_col_options = columns[row_idx]
+                pos_cols = False
+                for col_idx, curr_col in enumerate(curr_col_options):
+                    if curr_col[num_row] == row_val:
+                        pos_cols = True
+                        break
+                if not pos_cols:
+                    pos_rows[curr_row_idx] = None
+                    break
+        reduced_rows = [x for x in pos_rows if x != None]
+        out_rows.append((num_row,reduced_rows))
+    return out_rows
+
+
+        #
+        # for row_idx, row_val in enumerate(curr_row):
+        #     curr_col_options = possible_col[row_idx]
+        #     for col_idx, curr_col in enumerate(curr_col_options):
+        #         if curr_col[num_row] != row_val:
+        #             curr_col_options[col_idx] = None
+        #     curr_col_options = [x for x in curr_col_options if x != None]
+        #     if len(curr_col_options) == 0:
+        #         return False, None
+        #     possible_col[row_idx] = curr_col_options
+
+
+
+
 def getKey(item):
     return len(item[1])
 
@@ -16,36 +71,45 @@ def format(thing):
     return formatted
 
 def solve(constraints):
-    # print(constraints[0])
+    starttime = time.time()
+    print(constraints[0])
+    # time()
     possible_row = [(idx,gen_row(len(constraints[1]),x)) for idx,x in enumerate(constraints[0])]
     sorted_possible_row = sorted(possible_row,key=getKey)
     possible_col = [gen_row(len(constraints[0]),x) for x in constraints[1]]
-    # print(len(sorted_possible_row),len(possible_col))
     for idx,curr in enumerate(possible_col):
         if curr == []:
             possible_col[idx] = [[0]*len(possible_col)]
+    for idx, curr in enumerate(sorted_possible_row):
+        if curr[1] == []:
+            curr = (curr[0],[[0]*len(constraints[1])])
+        sorted_possible_row[idx] = curr
+        # print(curr)
     rowsSoFar = []
     target = len(possible_row)
     to_be_formatted = solveR(rowsSoFar,sorted_possible_row,possible_col,target)
-    print(to_be_formatted)
+    # print(to_be_formatted)
+    endtime = time.time()
+    print(endtime-starttime)
+    # print(time.asctime(time.gmtime()))
     sol = np.array(format(to_be_formatted))
-    print(sol)
+    # print(sol)
     return sol
 
 def solveR(rowsSoFar, sorted_possible_row, possible_col,target): #recursive
-    print('solveR')
+    # print('solveR')
     if len(rowsSoFar) == target:
         return rowsSoFar
-    curr_row_set = sorted_possible_row[0]
-    # print(curr_row_set)
+    # print(sorted_possible_row)
+    sorted_possible_row_copy = copy.deepcopy(sorted_possible_row)
+    sorted_possible_row_copy = reduceRows(sorted_possible_row_copy,possible_col)
+    curr_row_set = sorted_possible_row_copy[0]
     num_row = curr_row_set[0]
-    # print(len(curr_row_set[1]))
     for curr_row in curr_row_set[1]:
         rowsSoFar.append((num_row,curr_row))
-        # print(rowsSoFar)
         ret = isSafe(rowsSoFar, possible_col)
         if ret[0]:
-            child_ret = solveR(copy.deepcopy(rowsSoFar),sorted_possible_row[1:],ret[1],target)
+            child_ret = solveR(copy.deepcopy(rowsSoFar),sorted_possible_row_copy[1:],ret[1],target)
             if child_ret[0]:
                 return child_ret
         rowsSoFar = rowsSoFar[:-1]
@@ -53,6 +117,7 @@ def solveR(rowsSoFar, sorted_possible_row, possible_col,target): #recursive
 
 
 def isSafe(rowsSoFar, given_possible_col):
+    # print('isSafe')
     possible_col = copy.deepcopy(given_possible_col)
     # print(possible_col)
     if len(rowsSoFar) == 0:
@@ -63,6 +128,7 @@ def isSafe(rowsSoFar, given_possible_col):
         for row_idx, row_val in enumerate(curr_row):
             curr_col_options = possible_col[row_idx]
             for col_idx, curr_col in enumerate(curr_col_options):
+                # print(row_val,curr_col[num_row])
                 if curr_col[num_row] != row_val:
                     curr_col_options[col_idx] = None
             curr_col_options = [x for x in curr_col_options if x != None]
