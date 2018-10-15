@@ -34,8 +34,6 @@ def format(thing):
 
 def solve(constraints):
     starttime = time.time()
-    # print(constraints[0])
-    # possible_row = [(idx,gen_row(len(constraints[1]),x)) for idx,x in enumerate(constraints[0])]
     possible_row = []
     for idx, x in enumerate(constraints[0]):
         oldSeq = [None] * len(constraints[1])
@@ -66,6 +64,7 @@ def solveR(rowsSoFar, sorted_possible_row, possible_col,target): #recursive
     sorted_possible_row_copy = copy.deepcopy(sorted_possible_row)
     sum = 0
     sorted_possible_row_copy = reduceRows(sorted_possible_row_copy,possible_col)
+    sorted_possible_row_copy = sorted(sorted_possible_row_copy,key=getKey)
     curr_row_set = sorted_possible_row_copy[0]
     num_row = curr_row_set[0]
     for curr_row in curr_row_set[1]:
@@ -89,7 +88,6 @@ def isSafe(rowsSoFar, given_possible_col):
         for row_idx, row_val in enumerate(curr_row):
             curr_col_options = possible_col[row_idx]
             for col_idx, curr_col in enumerate(curr_col_options):
-                # print(row_val,curr_col[num_row])
                 if curr_col[num_row] != row_val:
                     curr_col_options[col_idx] = None
             curr_col_options = [x for x in curr_col_options if x != None]
@@ -172,9 +170,6 @@ def isSafe(rowsSoFar, given_possible_col):
 
 
     """
-    # dim0 = len(constraints[0])
-    # dim1 = len(constraints[1])
-    # return np.random.randint(2, size=(dim0, dim1))
 
 def make_combs(out, oldSeq, lineLength, lastColor, offSet, index, constraints):
     if offSet < lineLength:
@@ -199,20 +194,3 @@ def make_combs(out, oldSeq, lineLength, lastColor, offSet, index, constraints):
         if len(constraints) <= index:
             out.append(copy.deepcopy(oldSeq))
     return out
-
-
-
-
-def gen_row(w, s):
-    """Create all patterns of a row or col that match given runs."""
-    def gen_seg(o, sp):
-        if not o:
-            return [[0] * sp]
-        return [[0] * x + o[0] + tail
-                for x in range(1, sp - len(o) + 2)
-                for tail in gen_seg(o[1:], sp - x)]
-    # return [x[1:] for x in gen_seg([[1] * i for i in s], w + 1 - sum(s))]
-    sum = 0
-    for i in s:
-        sum+= i[0]
-    return [x[1:] for x in gen_seg([[i[1]] * i[0] for i in s], w + 1 - sum)]
