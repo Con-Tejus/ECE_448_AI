@@ -178,14 +178,17 @@ def make_combs(out, oldSeq, lineLength, lastColor, offSet, index, constraints):
             color = curr_constraint[1]
             size = curr_constraint[0]
 
-            notEmptyAndSame = lastColor != 0 and lastColor != color
+            notSame = lastColor != color
             fitToTheGrid = (offSet + size - 1) < lineLength
 
-            if (notEmptyAndSame or lastColor == 0) and fitToTheGrid:
+            if notSame and fitToTheGrid:
+                #add run
                 for i in range(size):
                     oldSeq[offSet+i] = color
 
                 out = make_combs(out,oldSeq,lineLength,color,offSet+size,index+1,constraints)
+
+                #remove run
                 for i in range(size):
                     oldSeq[offSet+i] = 0
         oldSeq[offSet] = 0
