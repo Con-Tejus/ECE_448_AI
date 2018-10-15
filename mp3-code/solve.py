@@ -177,8 +177,6 @@ def isSafe(rowsSoFar, given_possible_col):
     # return np.random.randint(2, size=(dim0, dim1))
 
 def make_combs(out, oldSeq, lineLength, lastColor, offSet, index, constraints):
-    # print(offSet,lineLength)
-    # print(out)
     if offSet < lineLength:
         if index < len(constraints):
             curr_constraint = constraints[index]
