@@ -1,3 +1,4 @@
+------------------------------------
 alpha=1
 NON-STEMMED
 Accuracy: 0.968
@@ -10,590 +11,794 @@ F1-Score: 0.9677419354838709
 Precision: 0.975609756097561
 Recall: 0.96
 ------------------------------------
-alpha=2
+alpha=.50000000000000000000
+NON-STEMMED
+Accuracy: 0.976
+F1-Score: 0.9758064516129032
+Precision: 0.983739837398374
+Recall: 0.968
+STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+------------------------------------
+alpha=.25000000000000000000
+NON-STEMMED
+Accuracy: 0.976
+F1-Score: 0.9758064516129032
+Precision: 0.983739837398374
+Recall: 0.968
+STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+------------------------------------
+alpha=.12500000000000000000
+NON-STEMMED
+Accuracy: 0.976
+F1-Score: 0.9758064516129032
+Precision: 0.983739837398374
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.968
+Precision: 0.968
+Recall: 0.968
+------------------------------------
+alpha=.06250000000000000000
+NON-STEMMED
+Accuracy: 0.976
+F1-Score: 0.9758064516129032
+Precision: 0.983739837398374
+Recall: 0.968
+STEMMED
+Accuracy: 0.972
+F1-Score: 0.9721115537848605
+Precision: 0.9682539682539683
+Recall: 0.976
+------------------------------------
+alpha=.03125000000000000000
+NON-STEMMED
+Accuracy: 0.976
+F1-Score: 0.9758064516129032
+Precision: 0.983739837398374
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9682539682539683
+Precision: 0.9606299212598425
+Recall: 0.976
+------------------------------------
+alpha=.01562500000000000000
+NON-STEMMED
+Accuracy: 0.976
+F1-Score: 0.9758064516129032
+Precision: 0.983739837398374
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9682539682539683
+Precision: 0.9606299212598425
+Recall: 0.976
+------------------------------------
+alpha=.00781250000000000000
+NON-STEMMED
+Accuracy: 0.976
+F1-Score: 0.9758064516129032
+Precision: 0.983739837398374
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9682539682539683
+Precision: 0.9606299212598425
+Recall: 0.976
+------------------------------------
+alpha=.00390625000000000000
+NON-STEMMED
+Accuracy: 0.976
+F1-Score: 0.9758064516129032
+Precision: 0.983739837398374
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9682539682539683
+Precision: 0.9606299212598425
+Recall: 0.976
+------------------------------------
+alpha=.00195312500000000000
+NON-STEMMED
+Accuracy: 0.98
+F1-Score: 0.9799196787148594
+Precision: 0.9838709677419355
+Recall: 0.976
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9682539682539683
+Precision: 0.9606299212598425
+Recall: 0.976
+------------------------------------
+alpha=.00097656250000000000
+NON-STEMMED
+Accuracy: 0.98
+F1-Score: 0.9799196787148594
+Precision: 0.9838709677419355
+Recall: 0.976
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9682539682539683
+Precision: 0.9606299212598425
+Recall: 0.976
+------------------------------------
+alpha=.00048828125000000000
+NON-STEMMED
+Accuracy: 0.98
+F1-Score: 0.9799196787148594
+Precision: 0.9838709677419355
+Recall: 0.976
+STEMMED
+Accuracy: 0.964
+F1-Score: 0.9644268774703557
+Precision: 0.953125
+Recall: 0.976
+------------------------------------
+alpha=.00024414062500000000
+NON-STEMMED
+Accuracy: 0.98
+F1-Score: 0.9799196787148594
+Precision: 0.9838709677419355
+Recall: 0.976
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9685039370078741
+Precision: 0.9534883720930233
+Recall: 0.984
+------------------------------------
+alpha=.00012207031250000000
+NON-STEMMED
+Accuracy: 0.976
+F1-Score: 0.976
+Precision: 0.976
+Recall: 0.976
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9685039370078741
+Precision: 0.9534883720930233
+Recall: 0.984
+------------------------------------
+alpha=.00006103515625000000
+NON-STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9685039370078741
+Precision: 0.9534883720930233
+Recall: 0.984
+------------------------------------
+alpha=.00003051757812500000
+NON-STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9685039370078741
+Precision: 0.9534883720930233
+Recall: 0.984
+------------------------------------
+alpha=.00001525878906250000
+NON-STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9685039370078741
+Precision: 0.9534883720930233
+Recall: 0.984
+------------------------------------
+alpha=.00000762939453125000
+NON-STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9685039370078741
+Precision: 0.9534883720930233
+Recall: 0.984
+------------------------------------
+alpha=.00000381469726562500
+NON-STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9685039370078741
+Precision: 0.9534883720930233
+Recall: 0.984
+------------------------------------
+alpha=.00000190734863281250
+NON-STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9685039370078741
+Precision: 0.9534883720930233
+Recall: 0.984
+------------------------------------
+alpha=.00000095367431640625
+NON-STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9685039370078741
+Precision: 0.9534883720930233
+Recall: 0.984
+------------------------------------
+alpha=.00000047683715820312
+NON-STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9685039370078741
+Precision: 0.9534883720930233
+Recall: 0.984
+------------------------------------
+alpha=.00000023841857910156
+NON-STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+STEMMED
+Accuracy: 0.968
+F1-Score: 0.9685039370078741
+Precision: 0.9534883720930233
+Recall: 0.984
+------------------------------------
+alpha=.00000011920928955078
+NON-STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+STEMMED
+Accuracy: 0.964
+F1-Score: 0.9647058823529412
+Precision: 0.9461538461538461
+Recall: 0.984
+------------------------------------
+alpha=.00000005960464477539
+NON-STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+STEMMED
+Accuracy: 0.964
+F1-Score: 0.9647058823529412
+Precision: 0.9461538461538461
+Recall: 0.984
+------------------------------------
+alpha=.00000002980232238769
+NON-STEMMED
+Accuracy: 0.972
+F1-Score: 0.9718875502008033
+Precision: 0.9758064516129032
+Recall: 0.968
+STEMMED
+Accuracy: 0.964
+F1-Score: 0.9647058823529412
+Precision: 0.9461538461538461
+Recall: 0.984
+------------------------------------
+alpha=.00000001490116119384
+NON-STEMMED
+Accuracy: 0.968
+F1-Score: 0.968
+Precision: 0.968
+Recall: 0.968
+STEMMED
+Accuracy: 0.964
+F1-Score: 0.9647058823529412
+Precision: 0.9461538461538461
+Recall: 0.984
+------------------------------------
+alpha=.00000000745058059692
+NON-STEMMED
+Accuracy: 0.968
+F1-Score: 0.968
+Precision: 0.968
+Recall: 0.968
+STEMMED
+Accuracy: 0.964
+F1-Score: 0.9647058823529412
+Precision: 0.9461538461538461
+Recall: 0.984
+------------------------------------
+alpha=.00000000372529029846
+NON-STEMMED
+Accuracy: 0.968
+F1-Score: 0.968
+Precision: 0.968
+Recall: 0.968
+STEMMED
+Accuracy: 0.964
+F1-Score: 0.9647058823529412
+Precision: 0.9461538461538461
+Recall: 0.984
+------------------------------------
+alpha=.00000000186264514923
+NON-STEMMED
+Accuracy: 0.968
+F1-Score: 0.968
+Precision: 0.968
+Recall: 0.968
+STEMMED
+Accuracy: 0.964
+F1-Score: 0.9647058823529412
+Precision: 0.9461538461538461
+Recall: 0.984
+------------------------------------
+alpha=.00000000093132257461
+NON-STEMMED
+Accuracy: 0.968
+F1-Score: 0.968
+Precision: 0.968
+Recall: 0.968
+STEMMED
+Accuracy: 0.96
+F1-Score: 0.9606299212598426
+Precision: 0.9457364341085271
+Recall: 0.976
+------------------------------------
+alpha=.00000000046566128730
+NON-STEMMED
+Accuracy: 0.968
+F1-Score: 0.968
+Precision: 0.968
+Recall: 0.968
+STEMMED
+Accuracy: 0.956
+F1-Score: 0.9568627450980391
+Precision: 0.9384615384615385
+Recall: 0.976
+------------------------------------
+alpha=.00000000023283064365
+NON-STEMMED
+Accuracy: 0.968
+F1-Score: 0.968
+Precision: 0.968
+Recall: 0.968
+STEMMED
+Accuracy: 0.956
+F1-Score: 0.9568627450980391
+Precision: 0.9384615384615385
+Recall: 0.976
+------------------------------------
+alpha=.00000000011641532182
+NON-STEMMED
+Accuracy: 0.968
+F1-Score: 0.968
+Precision: 0.968
+Recall: 0.968
+STEMMED
+Accuracy: 0.956
+F1-Score: 0.9568627450980391
+Precision: 0.9384615384615385
+Recall: 0.976
+------------------------------------
+alpha=.00000000005820766091
+NON-STEMMED
+Accuracy: 0.968
+F1-Score: 0.968
+Precision: 0.968
+Recall: 0.968
+STEMMED
+Accuracy: 0.956
+F1-Score: 0.9568627450980391
+Precision: 0.9384615384615385
+Recall: 0.976
+------------------------------------
+alpha=.00000000002910383045
 NON-STEMMED
 Accuracy: 0.964
-F1-Score: 0.9632653061224489
-Precision: 0.9833333333333333
-Recall: 0.944
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
 Accuracy: 0.956
-F1-Score: 0.9558232931726908
-Precision: 0.9596774193548387
-Recall: 0.952
+F1-Score: 0.9568627450980391
+Precision: 0.9384615384615385
+Recall: 0.976
 ------------------------------------
-alpha=3
+alpha=.00000000001455191522
 NON-STEMMED
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
+STEMMED
 Accuracy: 0.956
-F1-Score: 0.9554655870445343
-Precision: 0.9672131147540983
-Recall: 0.944
-STEMMED
-Accuracy: 0.948
-F1-Score: 0.9477911646586344
-Precision: 0.9516129032258065
-Recall: 0.944
+F1-Score: 0.9568627450980391
+Precision: 0.9384615384615385
+Recall: 0.976
 ------------------------------------
-alpha=4
+alpha=.00000000000727595761
 NON-STEMMED
-Accuracy: 0.948
-F1-Score: 0.9477911646586344
-Precision: 0.9516129032258065
-Recall: 0.944
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.948
-F1-Score: 0.9477911646586344
-Precision: 0.9516129032258065
-Recall: 0.944
+Accuracy: 0.956
+F1-Score: 0.9568627450980391
+Precision: 0.9384615384615385
+Recall: 0.976
 ------------------------------------
-alpha=5
+alpha=.00000000000363797880
 NON-STEMMED
-Accuracy: 0.948
-F1-Score: 0.9477911646586344
-Precision: 0.9516129032258065
-Recall: 0.944
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.948
-F1-Score: 0.9477911646586344
-Precision: 0.9516129032258065
-Recall: 0.944
+Accuracy: 0.956
+F1-Score: 0.9568627450980391
+Precision: 0.9384615384615385
+Recall: 0.976
 ------------------------------------
-alpha=6
+alpha=.00000000000181898940
 NON-STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.948
-F1-Score: 0.9477911646586344
-Precision: 0.9516129032258065
-Recall: 0.944
+Accuracy: 0.956
+F1-Score: 0.9568627450980391
+Precision: 0.9384615384615385
+Recall: 0.976
 ------------------------------------
-alpha=7
+alpha=.00000000000090949470
 NON-STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=8
+alpha=.00000000000045474735
 NON-STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=9
+alpha=.00000000000022737367
 NON-STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=10
+alpha=.00000000000011368683
 NON-STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=11
+alpha=.00000000000005684341
 NON-STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=12
+alpha=.00000000000002842170
 NON-STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=13
+alpha=.00000000000001421085
 NON-STEMMED
-Accuracy: 0.94
-F1-Score: 0.9392712550607287
-Precision: 0.9508196721311475
-Recall: 0.928
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=14
+alpha=.00000000000000710542
 NON-STEMMED
-Accuracy: 0.936
-F1-Score: 0.934959349593496
-Precision: 0.9504132231404959
-Recall: 0.92
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.944
-F1-Score: 0.9435483870967742
-Precision: 0.9512195121951219
-Recall: 0.936
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=15
+alpha=.00000000000000355271
 NON-STEMMED
-Accuracy: 0.936
-F1-Score: 0.934959349593496
-Precision: 0.9504132231404959
-Recall: 0.92
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.94
-F1-Score: 0.9392712550607287
-Precision: 0.9508196721311475
-Recall: 0.928
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=16
+alpha=.00000000000000177635
 NON-STEMMED
-Accuracy: 0.936
-F1-Score: 0.934959349593496
-Precision: 0.9504132231404959
-Recall: 0.92
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.936
-F1-Score: 0.9354838709677419
-Precision: 0.943089430894309
-Recall: 0.928
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=17
+alpha=.00000000000000088817
 NON-STEMMED
-Accuracy: 0.936
-F1-Score: 0.934959349593496
-Precision: 0.9504132231404959
-Recall: 0.92
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.936
-F1-Score: 0.9354838709677419
-Precision: 0.943089430894309
-Recall: 0.928
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=18
+alpha=.00000000000000044408
 NON-STEMMED
-Accuracy: 0.936
-F1-Score: 0.934959349593496
-Precision: 0.9504132231404959
-Recall: 0.92
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.932
-F1-Score: 0.9311740890688259
-Precision: 0.9426229508196722
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=19
+alpha=.00000000000000022204
 NON-STEMMED
-Accuracy: 0.932
-F1-Score: 0.9311740890688259
-Precision: 0.9426229508196722
-Recall: 0.92
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.932
-F1-Score: 0.9311740890688259
-Precision: 0.9426229508196722
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=20
+alpha=.00000000000000011102
 NON-STEMMED
-Accuracy: 0.932
-F1-Score: 0.9311740890688259
-Precision: 0.9426229508196722
-Recall: 0.92
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.932
-F1-Score: 0.9311740890688259
-Precision: 0.9426229508196722
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=21
+alpha=.00000000000000005551
 NON-STEMMED
-Accuracy: 0.932
-F1-Score: 0.9311740890688259
-Precision: 0.9426229508196722
-Recall: 0.92
+Accuracy: 0.964
+F1-Score: 0.963855421686747
+Precision: 0.967741935483871
+Recall: 0.96
 STEMMED
-Accuracy: 0.932
-F1-Score: 0.9311740890688259
-Precision: 0.9426229508196722
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=22
+alpha=.00000000000000002775
 NON-STEMMED
-Accuracy: 0.932
-F1-Score: 0.9311740890688259
-Precision: 0.9426229508196722
-Recall: 0.92
+Accuracy: 0.96
+F1-Score: 0.96
+Precision: 0.96
+Recall: 0.96
 STEMMED
-Accuracy: 0.932
-F1-Score: 0.9311740890688259
-Precision: 0.9426229508196722
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=23
+alpha=.00000000000000001387
 NON-STEMMED
-Accuracy: 0.932
-F1-Score: 0.9311740890688259
-Precision: 0.9426229508196722
-Recall: 0.92
+Accuracy: 0.96
+F1-Score: 0.96
+Precision: 0.96
+Recall: 0.96
 STEMMED
-Accuracy: 0.932
-F1-Score: 0.9311740890688259
-Precision: 0.9426229508196722
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=24
+alpha=.00000000000000000693
 NON-STEMMED
-Accuracy: 0.932
-F1-Score: 0.9311740890688259
-Precision: 0.9426229508196722
-Recall: 0.92
+Accuracy: 0.96
+F1-Score: 0.96
+Precision: 0.96
+Recall: 0.96
 STEMMED
-Accuracy: 0.928
-F1-Score: 0.9274193548387097
-Precision: 0.9349593495934959
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=25
+alpha=.00000000000000000346
 NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
+Accuracy: 0.96
+F1-Score: 0.96
+Precision: 0.96
+Recall: 0.96
 STEMMED
-Accuracy: 0.928
-F1-Score: 0.9274193548387097
-Precision: 0.9349593495934959
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=26
+alpha=.00000000000000000173
 NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
+Accuracy: 0.96
+F1-Score: 0.96
+Precision: 0.96
+Recall: 0.96
 STEMMED
-Accuracy: 0.928
-F1-Score: 0.9274193548387097
-Precision: 0.9349593495934959
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=27
+alpha=.00000000000000000086
 NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
+Accuracy: 0.96
+F1-Score: 0.96
+Precision: 0.96
+Recall: 0.96
 STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=28
+alpha=.00000000000000000043
 NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
+Accuracy: 0.96
+F1-Score: 0.96
+Precision: 0.96
+Recall: 0.96
 STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=29
+alpha=.00000000000000000021
 NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
+Accuracy: 0.96
+F1-Score: 0.96
+Precision: 0.96
+Recall: 0.96
 STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=30
+alpha=.00000000000000000010
 NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
+Accuracy: 0.96
+F1-Score: 0.96
+Precision: 0.96
+Recall: 0.96
 STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=31
+alpha=.00000000000000000005
 NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
+Accuracy: 0.96
+F1-Score: 0.96
+Precision: 0.96
+Recall: 0.96
 STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=32
+alpha=.00000000000000000002
 NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
+Accuracy: 0.96
+F1-Score: 0.96
+Precision: 0.96
+Recall: 0.96
 STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
 ------------------------------------
-alpha=33
+alpha=.00000000000000000001
 NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
+Accuracy: 0.96
+F1-Score: 0.96
+Precision: 0.96
+Recall: 0.96
 STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
-------------------------------------
-alpha=34
-NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
-STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
-------------------------------------
-alpha=35
-NON-STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
-STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
-------------------------------------
-alpha=36
-NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
-STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
-------------------------------------
-alpha=37
-NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
-STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
-------------------------------------
-alpha=38
-NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
-STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
-------------------------------------
-alpha=39
-NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
-STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
-------------------------------------
-alpha=40
-NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
-STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
-------------------------------------
-alpha=41
-NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
-STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
-------------------------------------
-alpha=42
-NON-STEMMED
-Accuracy: 0.924
-F1-Score: 0.9236947791164659
-Precision: 0.9274193548387096
-Recall: 0.92
-STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
-------------------------------------
-alpha=43
-NON-STEMMED
-Accuracy: 0.916
-F1-Score: 0.9156626506024096
-Precision: 0.9193548387096774
-Recall: 0.912
-STEMMED
-Accuracy: 0.92
-F1-Score: 0.92
-Precision: 0.92
-Recall: 0.92
-------------------------------------
-alpha=44
-NON-STEMMED
-Accuracy: 0.916
-F1-Score: 0.9156626506024096
-Precision: 0.9193548387096774
-Recall: 0.912
-STEMMED
-Accuracy: 0.916
-F1-Score: 0.9156626506024096
-Precision: 0.9193548387096774
-Recall: 0.912
-------------------------------------
-alpha=45
-NON-STEMMED
-Accuracy: 0.916
-F1-Score: 0.9156626506024096
-Precision: 0.9193548387096774
-Recall: 0.912
-STEMMED
-Accuracy: 0.916
-F1-Score: 0.9156626506024096
-Precision: 0.9193548387096774
-Recall: 0.912
-------------------------------------
-alpha=46
-NON-STEMMED
-Accuracy: 0.92
-F1-Score: 0.9193548387096775
-Precision: 0.926829268292683
-Recall: 0.912
-STEMMED
-Accuracy: 0.916
-F1-Score: 0.9156626506024096
-Precision: 0.9193548387096774
-Recall: 0.912
-------------------------------------
-alpha=47
-NON-STEMMED
-Accuracy: 0.92
-F1-Score: 0.9193548387096775
-Precision: 0.926829268292683
-Recall: 0.912
-STEMMED
-Accuracy: 0.916
-F1-Score: 0.9156626506024096
-Precision: 0.9193548387096774
-Recall: 0.912
-------------------------------------
-alpha=48
-NON-STEMMED
-Accuracy: 0.92
-F1-Score: 0.9193548387096775
-Precision: 0.926829268292683
-Recall: 0.912
-STEMMED
-Accuracy: 0.916
-F1-Score: 0.9156626506024096
-Precision: 0.9193548387096774
-Recall: 0.912
-------------------------------------
-alpha=49
-NON-STEMMED
-Accuracy: 0.92
-F1-Score: 0.9193548387096775
-Precision: 0.926829268292683
-Recall: 0.912
-STEMMED
-Accuracy: 0.916
-F1-Score: 0.9156626506024096
-Precision: 0.9193548387096774
-Recall: 0.912
-------------------------------------
-alpha=50
-NON-STEMMED
-Accuracy: 0.92
-F1-Score: 0.9193548387096775
-Precision: 0.926829268292683
-Recall: 0.912
-STEMMED
-Accuracy: 0.916
-F1-Score: 0.9156626506024096
-Precision: 0.9193548387096774
-Recall: 0.912
+Accuracy: 0.952
+F1-Score: 0.952755905511811
+Precision: 0.937984496124031
+Recall: 0.968
