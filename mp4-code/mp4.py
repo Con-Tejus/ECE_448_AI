@@ -31,8 +31,8 @@ def compute_accuracies(predicted_labels,dev_set,dev_labels):
 
 def main(args):
     train_set, train_labels, dev_set,dev_labels = reader.load_dataset(args.training_dir,args.development_dir,args.stemming)
-    predicted_labels = nb.naiveBayes(train_set,train_labels, dev_set, args.laplace)
-    accuracy,f1,precision,recall = compute_accuracies(predicted_labels,dev_set,dev_labels)
+    predicted_labels = nb.naiveBayes(train_set,train_labels, train_set, args.laplace)
+    accuracy,f1,precision,recall = compute_accuracies(predicted_labels,train_set,train_labels)
     print("Accuracy:",accuracy)
     print("F1-Score:",f1)
     print("Precision:",precision)
