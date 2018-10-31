@@ -1,3 +1,5 @@
+from math import log
+import copy
 # viterbi.py
 # ---------------
 # Licensing Information:  You are free to use or extend this projects for
@@ -134,40 +136,99 @@ def viterbi(train, test):
                     initProb[j[1]] += 1
                 except KeyError:
                     initProb[j[1]] = 1
-                # initialCount += 1
+                initialCount += 1
             else:
                 try:
                     tranProb[(prev_tag, j[1])] += 1
                 except KeyError:
                     tranProb[(prev_tag, j[1])] = 1
-                # transitionCount += 1
+                transitionCount += 1
             prev_tag = j[1]
             try:
                 emitProb[j[1]][j[0]] += 1
             except KeyError:
                 emitProb[j[1]][j[0]] = 1
-            # emissionCount += 1
+            emissionCount += 1
 
-    for count,sentence in enumerate(test):
+    def getInitProb(tag, smoothing_parameter=0.0000005):
+        return (initProb.get(tag,0)+smoothing_parameter)/(initialCount+initialCount*smoothing_parameter)
+
+
+    def getTranProb(prev, curr, smoothing_parameter=0.0000005):
+        return (tranProb.get((prev,curr),0)+smoothing_parameter)/(transitionCount+transitionCount*smoothing_parameter)
+
+
+    def getEmitProb(tag, word, smoothing_parameter=0.0000005):
+        # print(tag, word)
+        return (emitProb[tag].get(word,0)+smoothing_parameter)/(emissionCount+emissionCount*smoothing_parameter)
+
+
+    for sentence in test:
         sentence_list = []
-        prev_tag = ''
+        prev_row = None
+        flag = 0
         for word_id, word in enumerate(sentence):
-            type_check = 0
-            word_type = ''
+            flag = 1
+            row = []
             if word_id == 0:
                 for j in type_list:
-                    if initProb[j] * emitProb[j].get(word,0) > type_check:
-                        word_type = j
-                        type_check = initProb[j] * emitProb[j].get(word,0)
+                    prob = log(getInitProb(j) * getEmitProb(j, word))
+                    path = [j]
+                    row.append((j,prob,path))
+                prev_row = row
             else:
                 for j in type_list:
-                    if tranProb.get((prev_tag,j),0) * emitProb[j].get(word,0) > type_check:
-                        word_type = j
-                        type_check = tranProb.get((prev_tag,j),0) * emitProb[j].get(word,0)
-            prev_tag = word_type
-            word_out = (word,word_type)
-            sentence_list.append(word_out)
-        predicts.append(sentence_list)
+                    prior_path = prev_row[0][2]
+                    prior_prob = prev_row[0][1]
+                    for i in prev_row:
+                        curr_prob = log(getTranProb(i[0], j)) + i[1]
+                        if curr_prob > prior_prob:
+                            prior_prob = curr_prob
+                            prior_path = i[2]
+                    path = copy.deepcopy(prior_path)
+                    path.append(j)
+                    prob = prior_prob + log(getEmitProb(j,word))
+                    row.append((j,prob,path))
+                prev_row = row
+        if flag:
+            best_path = prev_row[0][2]
+            best_prob = prev_row[0][1]
+            for i in prev_row:
+                if i[1] > best_prob:
+                    best_prob = i[1]
+                    best_path = i[2]
+            for word_id, word in enumerate(sentence):
+                word_out = (word, best_path[word_id])
+                sentence_list.append(word_out)
+            predicts.append(sentence_list)
+
+
+
+
+
+    #
+    #
+    #
+    # for count,sentence in enumerate(test):
+    #     sentence_list = []
+    #     prev_tag = ''
+    #     for word_id, word in enumerate(sentence):
+    #         type_check = 0
+    #         word_type = ''
+    #         if word_id == 0:
+    #             for j in type_list:
+    #                 if initProb[j] * emitProb[j].get(word,0) > type_check:
+    #                     word_type = j
+    #                     type_check = initProb[j] * emitProb[j].get(word,0)
+    #         else:
+    #             for j in type_list:
+    #                 if tranProb.get((prev_tag,j),0) * emitProb[j].get(word,0) > type_check:
+    #                     word_type = j
+    #                     type_check = tranProb.get((prev_tag,j),0) * emitProb[j].get(word,0)
+    #         prev_tag = word_type
+    #         word_out = (word,word_type)
+    #         sentence_list.append(word_out)
+    #     predicts.append(sentence_list)
     return predicts
 
 
