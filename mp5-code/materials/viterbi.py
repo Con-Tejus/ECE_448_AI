@@ -150,15 +150,15 @@ def viterbi(train, test):
                 emitProb[j[1]][j[0]] = 1
             emissionCount += 1
 
-    def getInitProb(tag, smoothing_parameter=0.0000005):
-        return (initProb.get(tag,0)+smoothing_parameter)/(initialCount+initialCount*smoothing_parameter)
+    def getInitProb(tag, smoothing_parameter=0.00005):
+        return (initProb.get(tag,0)+smoothing_parameter)/(initialCount+emissionCount*smoothing_parameter)
 
 
-    def getTranProb(prev, curr, smoothing_parameter=0.0000005):
-        return (tranProb.get((prev,curr),0)+smoothing_parameter)/(transitionCount+transitionCount*smoothing_parameter)
+    def getTranProb(prev, curr, smoothing_parameter=0.00005):
+        return (tranProb.get((prev,curr),0)+smoothing_parameter)/(transitionCount+emissionCount*smoothing_parameter)
 
 
-    def getEmitProb(tag, word, smoothing_parameter=0.0000005):
+    def getEmitProb(tag, word, smoothing_parameter=0.00005):
         # print(tag, word)
         return (emitProb[tag].get(word,0)+smoothing_parameter)/(emissionCount+emissionCount*smoothing_parameter)
 
@@ -179,7 +179,7 @@ def viterbi(train, test):
             else:
                 for j in type_list:
                     prior_path = prev_row[0][2]
-                    prior_prob = prev_row[0][1]
+                    prior_prob = prev_row[0][1] + log(getTranProb(prev_row[0][0],j))
                     for i in prev_row:
                         curr_prob = log(getTranProb(i[0], j)) + i[1]
                         if curr_prob > prior_prob:
