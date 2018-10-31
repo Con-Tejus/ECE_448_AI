@@ -22,6 +22,47 @@ output: list of sentences, each sentence is a list of (word,tag) pairs.
 '''
 def baseline(train, test):
     predicts = []
+    type = {}
+    type['DET'] = {}
+    type['NOUN'] = {}
+    type['VERB'] = {}
+    type['ADJ'] = {}
+    type['ADP'] = {}
+    type['.'] = {}
+    type['ADV'] = {}
+    type['CONJ'] = {}
+    type['PRT'] = {}
+    type['PRON'] = {}
+    type['NUM'] = {}
+    type['X'] = {}
+    type_list = ['DET','NOUN','VERB','ADJ','ADP','.', 'ADV', 'CONJ', 'PRT','PRON','NUM','X']
+    # j[1] gives the type of the word
+    # j[0] gives the word
+    type_check = 0
+    word_type = ''
+    sentence_list = []
+    
+    for i in train:
+        for j in i:
+            if type[j[1]].get(j[0],0) == 0:
+                type[j[1]][j[0]] = 1
+            else:
+                type[j[1]][j[0]] = 1 + type[j[1]][j[0]]
+            
+    #test[i] gives the sentence
+    #test[i][j] gives the word
+    for count,sentence in enumerate(test):
+        sentence_list = []
+        for word in sentence:
+            type_check = 0
+            for j in type_list:
+                if (type[j].get(word,0) > type_check):
+                    word_type = j
+                    type_check = type[j].get(word,0)
+            word_out = (word,word_type)
+            sentence_list.append(word_out)
+        predicts.append(sentence_list)
+
     return predicts
 
 '''
@@ -33,4 +74,35 @@ output: list of sentences with tags on the words
 '''
 def viterbi(train, test):
     predicts = []
+    type = {}
+    type['DET'] = {}
+    type['NOUN'] = {}
+    type['VERB'] = {}
+    type['ADJ'] = {}
+    type['ADP'] = {}
+    type['.'] = {}
+    type['ADV'] = {}
+    type['CONJ'] = {}
+    type['PRT'] = {}
+    type['PRON'] = {}
+    type['NUM'] = {}
+    type['X'] = {}
+    type_list = ['DET','NOUN','VERB','ADJ','ADP','.', 'ADV', 'CONJ', 'PRT','PRON','NUM','X']
+    # j[1] gives the type of the word
+    # j[0] gives the word
+    type_check = 0
+    word_type = ''
+    sentence_list = []
+    
+    initialCount = 0
+    transitionCount = 0
+    emissionCount = 0
+
+
+   
+    #Initial probability: check first tag of each sentence
+    #Transition probability: while going through sentence, keep copy of current tag, move to next one 
+    
+    
+
     return predicts
