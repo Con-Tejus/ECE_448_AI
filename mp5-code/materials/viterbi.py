@@ -201,6 +201,8 @@ def viterbi(train, test):
                 word_out = (word, best_path[word_id])
                 sentence_list.append(word_out)
             predicts.append(sentence_list)
+        else:
+            predicts.append([])
 
 
 
