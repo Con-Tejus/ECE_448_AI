@@ -1,3 +1,4 @@
+import numpy as np
 # perceptron.py
 # ---------------
 # Licensing Information:  You are free to use or extend this projects for
@@ -13,7 +14,33 @@ within this file -- the unrevised staff files will be used for all other
 files and classes when code is run, so be careful to not modify anything else.
 """
 
+def activation(x):
+    if x >= 0:
+        return 1
+    else:
+        return -1
+
 def classify(train_set, train_labels, dev_set, learning_rate,max_iter):
+    weights = [0]*3072
+    bias = 0
+
+    for i in range(max_iter):
+        for vector_id, vector in enumerate(train_set):
+            model = np.dot(weights,vector) + bias
+            label = train_labels[vector_id]
+            if label == 0:
+                label = -1
+            activation = activation(model)
+            if activation != label:
+                for weight_id, weight in enumerate(weights):
+                    weights[weight_id] = weight + learning_rate * activation * vector[weight_id]
+
+    dev_labels = []
+    for dev_vector in dev_set:
+        model = np.dot(weights,dev_vector) + bias
+        dev_labels.append(activation(model) >= 0)
+
+
     """
     train_set - A Numpy array of 32x32x3 images of shape [7500, 3072].
                 This can be thought of as a list of 7500 vectors that are each
@@ -31,7 +58,7 @@ def classify(train_set, train_labels, dev_set, learning_rate,max_iter):
     """
     # TODO: Write your code here
     # return predicted labels of development set
-    return []
+    return dev_labels
 
 def classifyEC(train_set, train_labels, dev_set,learning_rate,max_iter):
     # Write your code here if you would like to attempt the extra credit
