@@ -87,11 +87,12 @@ def classify(train_set, train_labels, dev_set, learning_rate,max_iter):
 
 k = 10
 def classifyEC(train_set, train_labels, dev_set,learning_rate,max_iter):
+    starttime = time.time()
     results = []
     for dev_id, dev_elem in enumerate(dev_set):
         heap = queue.PriorityQueue()
         for vector_id, vector in enumerate(train_set):
-            diff = np.sum(abs(vector-dev_elem))
+            diff = math.sqrt(np.sum(pow(vector-dev_elem,2)))
             tuple = (diff, train_labels[vector_id])
             # print(tuple)
             heap.put((diff,train_labels[vector_id]))
@@ -101,7 +102,9 @@ def classifyEC(train_set, train_labels, dev_set,learning_rate,max_iter):
         while heap.qsize():
             sum += heap.get()[1]
         label = round(sum/k)
-        print(label)
+        # print(label)
         results.append(label)
             # Write your code here if you would like to attempt the extra credit
+    endtime = time.time()
+    print(endtime-starttime)
     return results
