@@ -40,7 +40,7 @@ def classify(train_set, train_labels, dev_set, learning_rate,max_iter):
                 label = -1
             act = activation(model)
             if act != label:
-                weights += learning_rate * label * vector
+                weights += learning_rate * label * vector * (2**epoch_id)
 
             # model = bias
             # valid_ids = []
