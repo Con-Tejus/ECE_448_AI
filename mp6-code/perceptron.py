@@ -1,5 +1,7 @@
 import numpy as np
 import time
+import queue
+import math
 # perceptron.py
 # ---------------
 # Licensing Information:  You are free to use or extend this projects for
@@ -24,7 +26,7 @@ def activation(x):
 def classify(train_set, train_labels, dev_set, learning_rate,max_iter):
     starttime = time.time()
     weights = [0]*3072
-    bias = 0
+    bias = 1
 
     for epoch_id in range(max_iter):
 
@@ -85,6 +87,21 @@ def classify(train_set, train_labels, dev_set, learning_rate,max_iter):
 
 k = 10
 def classifyEC(train_set, train_labels, dev_set,learning_rate,max_iter):
-
-    # Write your code here if you would like to attempt the extra credit
-    return []
+    results = []
+    for dev_id, dev_elem in enumerate(dev_set):
+        heap = queue.PriorityQueue()
+        for vector_id, vector in enumerate(train_set):
+            diff = np.sum(abs(vector-dev_elem))
+            tuple = (diff, train_labels[vector_id])
+            # print(tuple)
+            heap.put((diff,train_labels[vector_id]))
+            while heap.qsize() > k:
+                heap.get()
+        sum = 0
+        while heap.qsize():
+            sum += heap.get()[1]
+        label = round(sum/k)
+        print(label)
+        results.append(label)
+            # Write your code here if you would like to attempt the extra credit
+    return results
