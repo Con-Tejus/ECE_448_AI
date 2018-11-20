@@ -1,4 +1,5 @@
 import numpy as np
+import time
 # perceptron.py
 # ---------------
 # Licensing Information:  You are free to use or extend this projects for
@@ -21,19 +22,39 @@ def activation(x):
         return -1
 
 def classify(train_set, train_labels, dev_set, learning_rate,max_iter):
+    starttime = time.time()
     weights = [0]*3072
     bias = 0
 
-    for i in range(max_iter):
+    for epoch_id in range(max_iter):
+
+        # zipped = zip(train_set, train_labels)
+        # zipped_list = list(zipped)
+        # np.random.shuffle(list(zipped_list))
+        # train_set, train_labels = zip(*zipped_list)
+
         for vector_id, vector in enumerate(train_set):
-            model = np.dot(weights,vector) + bias
+            model = np.dot(weights, vector) + bias
             label = train_labels[vector_id]
             if label == 0:
                 label = -1
-            activation = activation(model)
-            if activation != label:
-                for weight_id, weight in enumerate(weights):
-                    weights[weight_id] = weight + learning_rate * activation * vector[weight_id]
+            act = activation(model)
+            if act != label:
+                weights += learning_rate * label * vector
+
+            # model = bias
+            # valid_ids = []
+            # for element_id, elem in enumerate(vector):
+            #     if elem:
+            #         model += weights[element_id] * elem
+            #         valid_ids.append(element_id)
+            # label = train_labels[vector_id]
+            # if label == 0:
+            #     label = -1
+            # act = activation(model)
+            # if act != label:
+            #     for element_id in valid_ids:
+            #         weights[element_id] += learning_rate * label * vector[element_id]
 
     dev_labels = []
     for dev_vector in dev_set:
@@ -58,8 +79,12 @@ def classify(train_set, train_labels, dev_set, learning_rate,max_iter):
     """
     # TODO: Write your code here
     # return predicted labels of development set
+    endtime = time.time()
+    print(endtime-starttime)
     return dev_labels
 
+k = 10
 def classifyEC(train_set, train_labels, dev_set,learning_rate,max_iter):
+
     # Write your code here if you would like to attempt the extra credit
     return []
