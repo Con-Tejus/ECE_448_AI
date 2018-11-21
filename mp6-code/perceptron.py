@@ -23,18 +23,29 @@ def activation(x):
     else:
         return -1
 
+"""
+train_set - A Numpy array of 32x32x3 images of shape [7500, 3072].
+This can be thought of as a list of 7500 vectors that are each
+3072 dimensional.  We have 3072 dimensions because there are
+each image is 32x32 and we have 3 color channels.
+So 32*32*3 = 3072
+train_labels - List of labels corresponding with images in train_set
+example: Suppose I had two images [X1,X2] where X1 and X2 are 3072 dimensional vectors
+and X1 is a picture of a dog and X2 is a picture of an airplane.
+Then train_labels := [1,0] because X1 contains a picture of an animal
+and X2 contains no animals in the picture.
+
+dev_set - A Numpy array of 32x32x3 images of shape [2500, 3072].
+It is the same format as train_set
+"""
+# TODO: Write your code here
+# return predicted labels of development set
 def classify(train_set, train_labels, dev_set, learning_rate,max_iter):
     starttime = time.time()
     weights = [0]*3072
-    bias = 1
+    bias = 0
 
     for epoch_id in range(max_iter):
-
-        # zipped = zip(train_set, train_labels)
-        # zipped_list = list(zipped)
-        # np.random.shuffle(list(zipped_list))
-        # train_set, train_labels = zip(*zipped_list)
-
         for vector_id, vector in enumerate(train_set):
             model = np.dot(weights, vector) + bias
             label = train_labels[vector_id]
@@ -44,49 +55,19 @@ def classify(train_set, train_labels, dev_set, learning_rate,max_iter):
             if act != label:
                 weights += learning_rate * label * vector * (2**epoch_id)
 
-            # model = bias
-            # valid_ids = []
-            # for element_id, elem in enumerate(vector):
-            #     if elem:
-            #         model += weights[element_id] * elem
-            #         valid_ids.append(element_id)
-            # label = train_labels[vector_id]
-            # if label == 0:
-            #     label = -1
-            # act = activation(model)
-            # if act != label:
-            #     for element_id in valid_ids:
-            #         weights[element_id] += learning_rate * label * vector[element_id]
-
     dev_labels = []
     for dev_vector in dev_set:
         model = np.dot(weights,dev_vector) + bias
         dev_labels.append(activation(model) >= 0)
 
 
-    """
-    train_set - A Numpy array of 32x32x3 images of shape [7500, 3072].
-                This can be thought of as a list of 7500 vectors that are each
-                3072 dimensional.  We have 3072 dimensions because there are
-                each image is 32x32 and we have 3 color channels.
-                So 32*32*3 = 3072
-    train_labels - List of labels corresponding with images in train_set
-    example: Suppose I had two images [X1,X2] where X1 and X2 are 3072 dimensional vectors
-             and X1 is a picture of a dog and X2 is a picture of an airplane.
-             Then train_labels := [1,0] because X1 contains a picture of an animal
-             and X2 contains no animals in the picture.
-
-    dev_set - A Numpy array of 32x32x3 images of shape [2500, 3072].
-              It is the same format as train_set
-    """
-    # TODO: Write your code here
-    # return predicted labels of development set
     endtime = time.time()
     print(endtime-starttime)
     return dev_labels
 
-k = 10
+# Write your code here if you would like to attempt the extra credit
 def classifyEC(train_set, train_labels, dev_set,learning_rate,max_iter):
+    k = 10
     starttime = time.time()
     results = []
     for dev_id, dev_elem in enumerate(dev_set):
@@ -94,7 +75,6 @@ def classifyEC(train_set, train_labels, dev_set,learning_rate,max_iter):
         for vector_id, vector in enumerate(train_set):
             diff = math.sqrt(np.sum(pow(vector-dev_elem,2)))
             tuple = (diff, train_labels[vector_id])
-            # print(tuple)
             heap.put((diff,train_labels[vector_id]))
             while heap.qsize() > k:
                 heap.get()
@@ -102,9 +82,7 @@ def classifyEC(train_set, train_labels, dev_set,learning_rate,max_iter):
         while heap.qsize():
             sum += heap.get()[1]
         label = round(sum/k)
-        # print(label)
         results.append(label)
-            # Write your code here if you would like to attempt the extra credit
     endtime = time.time()
     print(endtime-starttime)
     return results
