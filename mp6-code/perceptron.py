@@ -42,24 +42,25 @@ It is the same format as train_set
 # return predicted labels of development set
 def classify(train_set, train_labels, dev_set, learning_rate,max_iter):
     starttime = time.time()
-    weights = [0]*3073
+    weights = [0]*3072
     bias = 0
 
     for epoch_id in range(max_iter):
+        epoch_sum = 0
         for vector_id, vector in enumerate(train_set):
-            mod = np.append(vector,1)
-            model = np.dot(weights,mod)
+            model = np.dot(weights,vector) + bias
+            epoch_sum += model
             label = train_labels[vector_id]
             if label == 0:
                 label = -1
             act = activation(model)
             if act != label:
-                weights += learning_rate * label * mod * (2**epoch_id)
+                weights += learning_rate * label * vector * (2**epoch_id)
+        bias -= (epoch_sum/np.shape(train_set[0]))
 
     dev_labels = []
     for dev_vector in dev_set:
-        mod = np.append(dev_vector,1)
-        model = np.dot(weights, mod)
+        model = np.dot(weights, dev_vector)
         dev_labels.append(activation(model) >= 0)
 
 
