@@ -70,7 +70,7 @@ def classify(train_set, train_labels, dev_set, learning_rate,max_iter):
 
 # Write your code here if you would like to attempt the extra credit
 def classifyEC(train_set, train_labels, dev_set,learning_rate,max_iter):
-    k = 10
+    k = max_iter
     starttime = time.time()
     results = []
     for dev_id, dev_elem in enumerate(dev_set):
