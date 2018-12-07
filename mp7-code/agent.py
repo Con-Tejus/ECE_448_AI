@@ -1,6 +1,7 @@
 import utils
 import random
 import numpy as np
+import math
 
 class Agent:
     def learning_rate(self, state):
@@ -80,7 +81,7 @@ class Agent:
         # return action
 
     def chose_next(self, state):
-        tuning = 250
+        tuning = 0
         options = self.N[
         state[0],
         state[1],
@@ -121,8 +122,11 @@ class Agent:
             disc_v_y = 1
         else:
             disc_v_y = 0
-        disc_pad = int(paddle_y*self._paddle_locations) - 1
-        # disc_pad = floor(self._paddle_locations * paddle_y / (1 - paddle_height))
+        # disc_pad = int(paddle_y*self._paddle_locations) - 1
+        paddle_height = .2
+        disc_pad = math.floor(self._paddle_locations * paddle_y / (1 - paddle_height))
+        if disc_pad == 12:
+            disc_pad = 11
         return [
             x_bin,
             y_bin,
