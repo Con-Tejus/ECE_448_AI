@@ -3,6 +3,10 @@ import random
 import numpy as np
 
 class Agent:
+    def learning_rate(self, state):
+        C = 10
+        return C/(C+self.N[state[0],state[1],state[2],state[3],state[4],state[5]])
+
 
     def __init__(self, actions, two_sided=False):
         self._actions = actions
@@ -15,42 +19,91 @@ class Agent:
         self._num_actions = utils.NUM_ACTIONS
         # Create the Q Table to work with
         self.Q = utils.create_q_table()
+        self.N = utils.create_q_table()
         self.last_state = None
+        self.games = 0
 
     def act(self, state, bounces, done, won):
+        gamma = 0.6
         action = self._actions[0]
-        disc_state = self.discretize(state);
-        if self._train:
+        disc_state = self.discretize(state)
+        if self.train:
             if self.last_state:
-                self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += bounces
-            if random.choice(range(10)) < 8:
-                action = random.choice(self._actions)
-            else:
-                options = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4]]
-                max_id = 0
-                max_val = options[0]
-                for i in range(1):
-                    if options[i+1]> max_val:
-                        max_val = options[i+1]
-                        max_id = i+1
-                if max_id == 2:
-                    action = -1
-                else:
-                    action = max_id
+                self.N[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += 1
+                reward = bounces
+                if done and bounces < 9:
+                    reward = -1
+                # if done:
+                #
+                # reward = -1
+                # if bounces > 9:
+                #     reward = 1
+                alpha = self.learning_rate(self.last_state)
+                best_next_action = self.best_next(disc_state)
+                best_next_value = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4],best_next_action]
+                curr = self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]]
+                self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += alpha * (reward + gamma*(best_next_value-curr))
+
+            action = self.chose_next(disc_state)
             disc_state.append(action)
             self.last_state = disc_state
         else:
-            options = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4]]
-            max_id = 0
-            max_val = options[0]
-            for i in range(1):
-                if options[i+1]> max_val:
-                    max_val = options[i+1]
-                    max_id = i+1
-            if max_id == 2:
-                action = -1
-            else:
-                action = max_id
+            action = self.best_next(state)
+        return action
+        # if done:
+        #     self.games += 1
+        # action = self._actions[0]
+        # disc_state = self.discretize(state)
+        # if self._train:
+        #     self.N[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += 1
+        #     alpha = learning_rate(self.last_state)
+        #     if done:
+        #         reward = -1
+        #         if bounces > 9:
+        #             reward = 1
+        #         self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += reward + gamma*()
+        #     action = random.choice(self._actions)
+        #     disc_state.append(action)
+        #     self.last_state = disc_state
+        # else:
+        #     options = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4]]
+        #     max_id = 0
+        #     max_val = options[0]
+        #     for i in range(1):
+        #         if options[i+1]> max_val:
+        #             max_val = options[i+1]
+        #             max_id = i+1
+        #     if max_id == 2:
+        #         action = -1
+        #     else:
+        #         action = max_id
+        # return action
+
+    def chose_next(self, state):
+        tuning = 250
+        options = self.N[
+        state[0],
+        state[1],
+        state[2],
+        state[3],
+        state[4]]
+        if options.min() < tuning:
+            return random.choice(self._actions)
+        else:
+            return self.best_next(state)
+
+    def best_next(self, disc_state):
+        options = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4]]
+        max_id = 0
+        max_val = options[0]
+        for i in range(1):
+            if options[i+1]> max_val:
+                max_val = options[i+1]
+                max_id = i+1
+        if max_id == 2:
+            action = -1
+        else:
+            action = max_id
         return action
 
     def discretize(self, state):
