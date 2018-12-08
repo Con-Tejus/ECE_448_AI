@@ -5,7 +5,7 @@ import math
 
 class Agent:
     def learning_rate(self, state):
-        C = 10
+        C = 1000
         return C/(C+self.N[state[0],state[1],state[2],state[3],state[4],state[5]])
 
 
@@ -23,6 +23,8 @@ class Agent:
         self.N = utils.create_q_table()
         self.last_state = None
         self.games = 0
+        self.prev_bounce = 0
+
 
     def act(self, state, bounces, done, won):
         gamma = 0.6
@@ -31,9 +33,7 @@ class Agent:
         if self.train:
             if self.last_state:
                 self.N[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += 1
-                reward = bounces
-                if done and bounces < 9:
-                    reward = -1
+                reward = self.get_reward(bounces,done,won)
                 # if done:
                 #
                 # reward = -1
@@ -41,12 +41,12 @@ class Agent:
                 #     reward = 1
                 alpha = self.learning_rate(self.last_state)
                 best_next_action = self.best_next(disc_state)
-                best_next_value = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4],best_next_action]
+                best_next_value = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4],self.action_to_index(best_next_action)]
                 curr = self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]]
                 self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += alpha * (reward + gamma*(best_next_value-curr))
-
+            self.prev_bounce= bounces
             action = self.chose_next(disc_state)
-            disc_state.append(action)
+            disc_state.append(self.action_to_index(action))
             self.last_state = disc_state
         else:
             action = self.best_next(state)
@@ -80,16 +80,27 @@ class Agent:
         #         action = max_id
         # return action
 
+    def get_reward(self, bounces, done, won):
+        if self.prev_bounce < bounces:
+            return 1
+        elif done:
+            return -1
+        return 0
+
     def chose_next(self, state):
-        tuning = 0
+        tuning = 500
         options = self.N[
         state[0],
         state[1],
         state[2],
         state[3],
         state[4]]
-        if options.min() < tuning:
-            return random.choice(self._actions)
+        ids = []
+        for i in range(3):
+            if options[i] < tuning:
+                ids.append(i)
+        if len(ids) > 0:
+            return self.index_to_action(random.choice(ids))
         else:
             return self.best_next(state)
 
@@ -97,21 +108,25 @@ class Agent:
         options = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4]]
         max_id = 0
         max_val = options[0]
-        for i in range(1):
-            if options[i+1]> max_val:
-                max_val = options[i+1]
-                max_id = i+1
-        if max_id == 2:
-            action = -1
-        else:
-            action = max_id
-        return action
+        for i in range(3):
+            if options[i]> max_val:
+                max_val = options[i]
+                max_id = i
+        return self.index_to_action(max_id)
+
+    def index_to_action(self, index):
+        return self._actions[index]
+
+    def action_to_index(self, action):
+        return self._actions.index(action)
 
     def discretize(self, state):
         ball_x, ball_y, velocity_x, velocity_y, paddle_y = state;
         x_bin = y_bin = disc_v_x = disc_v_y = disc_pad = None
         x_bin = int(ball_x*self._x_bins) - 1
+        x_bin = min(x_bin,11)
         y_bin = int(ball_y*self._y_bins) - 1
+        y_bin = min(y_bin,11)
         if velocity_x > 0:
             disc_v_x = 1
         else:
@@ -122,7 +137,6 @@ class Agent:
             disc_v_y = 1
         else:
             disc_v_y = 0
-        # disc_pad = int(paddle_y*self._paddle_locations) - 1
         paddle_height = .2
         disc_pad = math.floor(self._paddle_locations * paddle_y / (1 - paddle_height))
         if disc_pad == 12:
