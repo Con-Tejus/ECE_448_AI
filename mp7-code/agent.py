@@ -34,23 +34,45 @@ class Agent:
     def act(self, state, bounces, done, won):
         action = self._actions[0]
         disc_state = self.discretize(state)
+        if self.opponent:
+            C = 1000
+            tuning = 150
+            gamma = 0.6
+            epsilon = 11
+            if self.train:
+                if self.last_state:
+                    reward = self.get_reward(bounces,done,won)
+                    alpha = self.learning_rate(self.last_state)
+                    best_next_action = self.best_next(disc_state)
+                    best_next_value = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4],self.action_to_index(best_next_action)]
+                    curr = self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]]
+                    self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += alpha * (reward + gamma*(best_next_value-curr))
+                self.prev_bounce= bounces
+                action = self.chose_next(disc_state)
+                disc_state.append(self.action_to_index(action))
+                self.inc_n(disc_state)
+                self.last_state = disc_state
+            else:
+                action = self.best_next(state)
+            return action
 
-        if self.train:
-            if self.last_state:
-                reward = self.get_reward(bounces,done,won)
-                alpha = self.learning_rate(self.last_state)
-                best_next_action = self.best_next(disc_state)
-                best_next_value = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4],self.action_to_index(best_next_action)]
-                curr = self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]]
-                self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += alpha * (reward + gamma*(best_next_value-curr))
-            self.prev_bounce= bounces
-            action = self.chose_next(disc_state)
-            disc_state.append(self.action_to_index(action))
-            self.inc_n(disc_state)
-            self.last_state = disc_state
         else:
-            action = self.best_next(state)
-        return action
+            if self.train:
+                if self.last_state:
+                    reward = self.get_reward(bounces,done,won)
+                    alpha = self.learning_rate(self.last_state)
+                    best_next_action = self.best_next(disc_state)
+                    best_next_value = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4],self.action_to_index(best_next_action)]
+                    curr = self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]]
+                    self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += alpha * (reward + gamma*(best_next_value-curr))
+                self.prev_bounce= bounces
+                action = self.chose_next(disc_state)
+                disc_state.append(self.action_to_index(action))
+                self.inc_n(disc_state)
+                self.last_state = disc_state
+            else:
+                action = self.best_next(state)
+            return action
 
     def get_reward(self, bounces, done, won):
         if self.two_sided:
