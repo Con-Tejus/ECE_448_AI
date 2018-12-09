@@ -6,7 +6,7 @@ import math
 C = 1000
 tuning = 150
 gamma = 0.6
-epsilon = 11 
+epsilon = 11
 #epsilon 11
 
 class Agent:
@@ -14,6 +14,7 @@ class Agent:
         return C/(C+self.N[state[0],state[1],state[2],state[3],state[4],state[5]])
 
     def __init__(self, actions, two_sided=False):
+        self.opponent = two_sided
         self._actions = actions
         self._train = True
         self._x_bins = utils.X_BINS
@@ -33,30 +34,59 @@ class Agent:
     def act(self, state, bounces, done, won):
         action = self._actions[0]
         disc_state = self.discretize(state)
-
-        if self.train:
-            if self.last_state:
-                reward = self.get_reward(bounces,done,won)
-                alpha = self.learning_rate(self.last_state)
-                best_next_action = self.best_next(disc_state)
-                best_next_value = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4],self.action_to_index(best_next_action)]
-                curr = self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]]
-                self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += alpha * (reward + gamma*(best_next_value-curr))
-            self.prev_bounce= bounces
-            action = self.chose_next(disc_state)
-            disc_state.append(self.action_to_index(action))
-            self.inc_n(disc_state)
-            self.last_state = disc_state
-        else:
-            action = self.best_next(state)
-        return action
+        if self.opponent:
+            C = 1000
+            tuning = 150
+            gamma = 0.6
+            epsilon = 11
+            if self.train:
+                if self.last_state:
+                    reward = self.get_reward(bounces,done,won)
+                    alpha = self.learning_rate(self.last_state)
+                    best_next_action = self.best_next(disc_state)
+                    best_next_value = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4],self.action_to_index(best_next_action)]
+                    curr = self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]]
+                    self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += alpha * (reward + gamma*(best_next_value-curr))
+                self.prev_bounce= bounces
+                action = self.chose_next(disc_state)
+                disc_state.append(self.action_to_index(action))
+                self.inc_n(disc_state)
+                self.last_state = disc_state
+            else:
+                action = self.best_next(state)
+            return action
+             
+        else:    
+            if self.train:
+                if self.last_state:
+                    reward = self.get_reward(bounces,done,won)
+                    alpha = self.learning_rate(self.last_state)
+                    best_next_action = self.best_next(disc_state)
+                    best_next_value = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4],self.action_to_index(best_next_action)]
+                    curr = self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]]
+                    self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]] += alpha * (reward + gamma*(best_next_value-curr))
+                self.prev_bounce= bounces
+                action = self.chose_next(disc_state)
+                disc_state.append(self.action_to_index(action))
+                self.inc_n(disc_state)
+                self.last_state = disc_state
+            else:
+                action = self.best_next(state)
+            return action
 
     def get_reward(self, bounces, done, won):
-        if self.prev_bounce < bounces or won:
-            return 1
-        elif done:
-            return -10
-        return 0
+        if self.opponent:
+            if self.prev_bounce < bounces or won:
+                return 1
+            elif done:
+                return -10
+            return 0
+        else:
+            if self.prev_bounce < bounces or won:
+                return 1
+            elif done:
+                return -10
+            return 0
 
     def inc_n(self, s):
         self.N[s[0],s[1],s[2],s[3],s[4],s[5]] += 1
