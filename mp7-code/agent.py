@@ -3,7 +3,7 @@ import random
 import numpy as np
 import math
 
-C = 1000
+C = 10000
 tuning = 150
 gamma = 0.6
 epsilon = 11
@@ -14,7 +14,7 @@ class Agent:
         return C/(C+self.N[state[0],state[1],state[2],state[3],state[4],state[5]])
 
     def __init__(self, actions, two_sided=False):
-        self.opponent = two_sided
+        self.two_sided = two_sided
         self._actions = actions
         self._train = True
         self._x_bins = utils.X_BINS
@@ -55,8 +55,8 @@ class Agent:
             else:
                 action = self.best_next(state)
             return action
-             
-        else:    
+
+        else:
             if self.train:
                 if self.last_state:
                     reward = self.get_reward(bounces,done,won)
@@ -104,13 +104,13 @@ class Agent:
         # for i in range(3):
         #     if options[i] < tuning:
         #         ids.append(i)
-        
+
         if random.random() > epsilon:
            return self.index_to_action(random.choice(ids))
         else:
            return self.best_next(state)
 
-          
+
 
     def best_next(self, disc_state):
         options = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4]]
