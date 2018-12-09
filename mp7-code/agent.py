@@ -4,8 +4,10 @@ import numpy as np
 import math
 
 C = 1000
-tuning = 500
+tuning = 150
 gamma = 0.6
+epsilon = 11 
+#epsilon 11
 
 class Agent:
     def learning_rate(self, state):
@@ -31,6 +33,7 @@ class Agent:
     def act(self, state, bounces, done, won):
         action = self._actions[0]
         disc_state = self.discretize(state)
+
         if self.train:
             if self.last_state:
                 reward = self.get_reward(bounces,done,won)
@@ -49,10 +52,10 @@ class Agent:
         return action
 
     def get_reward(self, bounces, done, won):
-        if self.prev_bounce < bounces:
+        if self.prev_bounce < bounces or won:
             return 1
         elif done:
-            return -1
+            return -10
         return 0
 
     def inc_n(self, s):
@@ -66,14 +69,17 @@ class Agent:
 
     def chose_next(self, state):
         options = self.N[state[0],state[1],state[2],state[3],state[4]]
-        ids = []
-        for i in range(3):
-            if options[i] < tuning:
-                ids.append(i)
-        if len(ids) > 0:
-            return self.index_to_action(random.choice(ids))
+        ids = [0,1,2]
+        # for i in range(3):
+        #     if options[i] < tuning:
+        #         ids.append(i)
+        
+        if random.random() > epsilon:
+           return self.index_to_action(random.choice(ids))
         else:
-            return self.best_next(state)
+           return self.best_next(state)
+
+          
 
     def best_next(self, disc_state):
         options = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4]]
