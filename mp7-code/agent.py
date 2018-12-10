@@ -3,18 +3,27 @@ import random
 import numpy as np
 import math
 
-C = 10000
-tuning = 150
+
 gamma = 0.6
-epsilon = 11
-#epsilon 11
+#epsilon = .991
+epsilon = .991
+tuning = 18
 
 class Agent:
     def learning_rate(self, state):
+        if self.opponent:
+            C = 5000
+        else:
+            C = 1000
         return C/(C+self.N[state[0],state[1],state[2],state[3],state[4],state[5]])
+    
+    def softmax(self,x):
+        e_x = np. exp(x - np.max(x))
+        return e_x / e_x.sum()
 
     def __init__(self, actions, two_sided=False):
-        self.two_sided = two_sided
+        self.opponent = two_sided
+        self.epsilon = epsilon
         self._actions = actions
         self._train = True
         self._x_bins = utils.X_BINS
@@ -34,12 +43,10 @@ class Agent:
     def act(self, state, bounces, done, won):
         action = self._actions[0]
         disc_state = self.discretize(state)
+        
         if self.opponent:
-            C = 10000
-            tuning = 150 #not used
-            gamma = 0.6
-            epsilon = 11
-            if self.train:
+            if self._train:
+                #self.epsilon *= .999994
                 if self.last_state:
                     reward = self.get_reward(bounces,done,won)
                     alpha = self.learning_rate(self.last_state)
@@ -53,11 +60,11 @@ class Agent:
                 self.inc_n(disc_state)
                 self.last_state = disc_state
             else:
-                action = self.best_next(state)
+                action = self.best_next(disc_state)
             return action
-
-        else:
-            if self.train:
+             
+        else:    
+            if self._train:
                 if self.last_state:
                     reward = self.get_reward(bounces,done,won)
                     alpha = self.learning_rate(self.last_state)
@@ -71,7 +78,9 @@ class Agent:
                 self.inc_n(disc_state)
                 self.last_state = disc_state
             else:
-                action = self.best_next(state)
+                
+                action = self.best_next(disc_state)
+                
             return action
 
     def get_reward(self, bounces, done, won):
@@ -84,8 +93,10 @@ class Agent:
         else:
             if done:
                 if won:
+                    #return 4
                     return 1
                 else:
+                    #return -3
                     return -1
             return 0
 
@@ -99,18 +110,33 @@ class Agent:
             return self.Q[s[0],s[1],s[2],s[3],s[4],s[5]]
 
     def chose_next(self, state):
+
         options = self.N[state[0],state[1],state[2],state[3],state[4]]
-        ids = [0,1,2]
+        ids = []
+        for i in range(3):
+            if options[i] < tuning:
+                ids.append(i)
+        if len(ids) > 0:
+            return self.index_to_action(random.choice(ids))
+        else:
+            return self.best_next(state)
+       
+        # options = self.N[state[0],state[1],state[2],state[3],state[4]]
+        # ids = []
         # for i in range(3):
         #     if options[i] < tuning:
         #         ids.append(i)
+        # if options[i] < tuning:
+        #     return 
 
-        if random.random() > epsilon:
-           return self.index_to_action(random.choice(ids))
-        else:
-           return self.best_next(state)
+        # ids = [0,1,2]
+       
+        # if random.random() > epsilon: 
+        #     return self.index_to_action(random.choice(ids))
+        # else:
+        #     return self.best_next(state)
 
-
+          
 
     def best_next(self, disc_state):
         options = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4]]
