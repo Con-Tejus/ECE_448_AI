@@ -97,7 +97,7 @@ class Agent:
             if done:
                 if won:
                     #return 4
-                    return 2
+                    return 1
                 else:
                     #return -3
                     return -10
