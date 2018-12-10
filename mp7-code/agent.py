@@ -35,8 +35,8 @@ class Agent:
         action = self._actions[0]
         disc_state = self.discretize(state)
         if self.opponent:
-            C = 1000
-            tuning = 150
+            C = 10000
+            tuning = 150 #not used
             gamma = 0.6
             epsilon = 11
             if self.train:
@@ -75,7 +75,7 @@ class Agent:
             return action
 
     def get_reward(self, bounces, done, won):
-        if self.two_sided:
+        if not self.opponent: 
             if self.prev_bounce < bounces or won:
                 return 1
             elif done:
@@ -87,8 +87,7 @@ class Agent:
                     return 1
                 else:
                     return -1
-            else:
-                return 0
+            return 0
 
     def inc_n(self, s):
         self.N[s[0],s[1],s[2],s[3],s[4],s[5]] += 1
