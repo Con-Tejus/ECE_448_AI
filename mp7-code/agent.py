@@ -6,13 +6,13 @@ import math
 
 gamma = 0.6
 #epsilon = .991
-epsilon = .991
+epsilon = .996
 tuning = 18
 
 class Agent:
     def learning_rate(self, state):
         if self.opponent:
-            C = 5000
+            C = 120
         else:
             C = 1000
         return C/(C+self.N[state[0],state[1],state[2],state[3],state[4],state[5]])
@@ -46,10 +46,13 @@ class Agent:
         
         if self.opponent:
             if self._train:
-                #self.epsilon *= .999994
+                C = 120
+                
                 if self.last_state:
                     reward = self.get_reward(bounces,done,won)
                     alpha = self.learning_rate(self.last_state)
+                    # self.epsilon *= alpha**(1/1000)
+                    # print(self.epsilon)
                     best_next_action = self.best_next(disc_state)
                     best_next_value = self.Q[disc_state[0],disc_state[1],disc_state[2],disc_state[3],disc_state[4],self.action_to_index(best_next_action)]
                     curr = self.Q[self.last_state[0],self.last_state[1],self.last_state[2],self.last_state[3],self.last_state[4],self.last_state[5]]
@@ -94,10 +97,10 @@ class Agent:
             if done:
                 if won:
                     #return 4
-                    return 1
+                    return 2
                 else:
                     #return -3
-                    return -1
+                    return -10
             return 0
 
     def inc_n(self, s):
@@ -119,7 +122,10 @@ class Agent:
         if len(ids) > 0:
             return self.index_to_action(random.choice(ids))
         else:
-            return self.best_next(state)
+            if random.random() > epsilon: 
+                return random.choice(self._actions)
+            else:
+                return self.best_next(state)
        
         # options = self.N[state[0],state[1],state[2],state[3],state[4]]
         # ids = []
